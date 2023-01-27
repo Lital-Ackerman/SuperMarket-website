@@ -1,0 +1,59 @@
+<form (ngSubmit)="secondRegister()" #myForm1="ngForm">
+    <h1>STEP-1</h1>
+   
+    <label>user ID:</label>
+    <input #userId="ngModel" name="userId" [(ngModel)]="myUser.userId" class="form-control" type="number" placeholder="user ID here..." required min="100000000" max="999999999" (blur)="checkId()">
+    
+    <label>username(Email):</label>
+    <input #username="ngModel"  name="username" [(ngModel)]="myUser.username" class= "form-control" type="email" placeholder="username@xxx.com" required minlength="6" maxlength="30" (blur)="ValidateEmail()">
+    
+    <label>Password:</label>
+    <input #password="ngModel"  name="password" [(ngModel)]="myUser.password" class= "form-control" type="text" placeholder="password here..." required minlength="8" maxlength="30">
+    
+    <label>Password Confirm:</label>
+    <input #confirmPassword="ngModel" name="confirmPassword" [(ngModel)]="myUser.confirmPassword" class="form-control" type="text" placeholder="confirm password..." required (blur)="checkMatchPass()">
+   <br/>
+    <!-- <button class="btn btn-primary" [disabled]="myForm1.invalid || idExist==true|| usernameExist==true || matchPasswords==false"  type="submit">To STEP 2-></button> -->
+    <button class="btn btn-primary" type="submit">To STEP 2-></button>
+
+
+<div *ngIf="myForm1.invalid || idExist==false|| usernameExist==false || matchPasswords==false" class="valMessage">
+    <br/><h5>validation messages- 1:</h5>
+    <span *ngIf="userId.errors && userId.touched">
+        <span class="bi bi-exclamation-circle-fill" *ngIf="userId.errors['required']"> Missing user ID</span>
+        <span class="bi bi-exclamation-circle-fill" *ngIf="userId.errors['min'] || userId.errors['max']"> ID must be 9 digits</span>
+    </span>
+    <span class="bi bi-exclamation-circle-fill" *ngIf="idExist==true"> ID already exist</span>
+
+
+    <!-- <span *ngIf="username.touched && validEmail==false">Invalid email address</span> -->
+    <span *ngIf="username.errors && username.touched && validEmail==false">
+        <span class="bi bi-exclamation-circle-fill" *ngIf="username.errors['required']"> Missing username</span>
+        <span class="bi bi-exclamation-circle-fill" *ngIf="username.errors['minlength'] || username.errors['maxlength']"> Invalid email address</span>
+    </span>
+    <span class="bi bi-exclamation-circle-fill" *ngIf="usernameExist==true"> Username already exist</span>
+
+
+    <span *ngIf="password.errors && password.touched">
+        <span class="bi bi-exclamation-circle-fill" *ngIf="password.errors['required']"> Missing password</span>
+        <span class="bi bi-exclamation-circle-fill" *ngIf="password.errors['minlength'] || password.errors['maxlength']"> Use 8 or more characters for your password</span>
+    </span>
+
+    <span *ngIf="confirmPassword.touched">
+        <span class="bi bi-exclamation-circle-fill" *ngIf="confirmPassword.errors && confirmPassword.errors['required']"> Missing Password Confirm</span>
+    </span>
+    <span class="bi bi-exclamation-circle-fill" *ngIf="confirmPassword.dirty && confirmPassword.valid &&  matchPasswords==false"> Passwords didn't match. Try again</span>
+
+    <!-- <span class="bi bi-exclamation-circle-fill" *ngIf="confirmPassword.valid && confirmPassword.value != password.value"> Passwords didn't match. Try again</span> -->
+
+
+
+
+    <!-- <span *ngIf="confirmPassword.errors && confirmPassword.touched">
+        <span class="bi bi-exclamation-circle-fill" *ngIf="confirmPassword.errors['required']"> Confirm your password</span>
+        <span class="bi bi-exclamation-circle-fill" *ngIf="confirmPassword.value!=password.value"> PasswordS didn't match. Try again.</span>
+    </span> -->
+
+</div>
+</form>
+

@@ -1,0 +1,60 @@
+section{
+  height: 100%;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-rows: repeat(12, 1fr);
+    grid-template-columns: repeat(6, 1fr);
+    padding: 10px;
+}
+
+nav{
+  background-color: #e3f2fd;
+}
+
+.input-group{
+  grid-row: span 1;
+  grid-column: span 6;
+  }
+
+.cartHeader{
+  margin-top: 30px;
+  grid-row: span 1;
+  grid-column: span 6;
+  /* border: 2px solid; */
+}
+.cartBody{
+  grid-row: span 9;
+  grid-column: span 6;
+  /* border: 2px solid; */
+  overflow-y: auto;
+}
+/* .cartFooter{
+  grid-row: span 1;
+  grid-column: span 6;
+  border: 2px solid;
+} */
+
+h4{
+  display: inline;
+  grid-row: span 1;
+  grid-column: span 5;
+}
+
+button {
+  display: inline;
+  grid-row: span 1;
+  grid-column: span 1;
+}
+
+.form-control{
+  width: 100px;
+}
+
+table, th, td{
+  text-align: center;
+  padding: 5px;
+}
+
+table{
+  margin: auto;
+}

@@ -1,0 +1,34 @@
+<section>
+    <header>
+      <app-header></app-header>
+    </header>
+    <!-- <app-products></app-products> -->
+
+  <main>
+    <div class="leftBar">
+      <router-outlet name="leftBar"></router-outlet>
+    </div>
+    <div class="mainBar">
+      <router-outlet></router-outlet>
+    </div>
+</main>
+
+
+
+    <!-- <main>
+      <div class="leftDiv">
+        <router-outlet name="signBar"></router-outlet>
+      </div>
+      <div class="centerDiv">
+        <app-about></app-about>
+      </div>
+      <div class="rightDiv">
+        <app-info></app-info>
+      </div>
+    </main> -->
+
+    <footer>
+      <app-footer></app-footer>
+    </footer>
+
+</section>

@@ -1,0 +1,19 @@
+.form-control{
+  width: 80px;
+  display: inline;
+  margin-left: 20px;
+}
+
+
+.popUp{
+padding: 20PX;
+}
+
+.btn{
+  display: block;
+  margin-top: 20px;
+}
+
+span{
+  font-weight: bold;
+}

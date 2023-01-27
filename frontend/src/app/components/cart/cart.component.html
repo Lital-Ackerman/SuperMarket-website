@@ -1,0 +1,41 @@
+<section>
+  <div class="input-group">
+    <input #searchInput [(ngModel)]="searchProductName" name="searchProduct" type="text" class="form-control" placeholder="Search Product" (input)="onSearch(searchProductName)">
+    <div class="input-group-append">
+      <button title="searchBtn" class="btn btn-secondary" >
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </div>
+
+
+<div class="cartHeader">
+  <h1>My Cart</h1>
+  <hr>
+</div>
+
+<div class="cartBody">
+  <table>
+
+    <thead>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Quantity</th>
+      <th>Sum</th>
+    </thead>
+
+      <tbody>
+        <tr *ngFor="let d of myCartList">
+          <td>{{d.productName}}</td>
+          <td>{{d.price}}</td>
+          <td>{{d.quantity}}</td>
+          <td>{{d.totalPerProduct}}</td>
+        </tr>
+      </tbody>
+  </table>
+</div>
+
+  <h4>Total: {{total}}</h4>
+  <button class="btn btn-primary" type="button">Order</button>
+
+</section>

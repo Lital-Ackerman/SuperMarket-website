@@ -1,0 +1,15 @@
+<nav class="navbar navbar-expand-sm navbar-light bg-light">
+  <div class="container-fluid">
+  <ul *ngFor="let c of categories" class="navbar-nav mr-auto">
+    <li class="nav-item"><a class="nav-link" (click)="showProducts(c.categoryId)">{{c.categoryName}}</a></li>
+  </ul>
+</div>
+</nav>
+
+<div class="cardsContainer" *ngIf="products">
+  <div class="card" *ngFor="let p of products" (click)="selectProduct(p)">
+    <img [src]="imageUrl + p.image" alt="productImage">
+    <div class= "card-title">{{p.productName}}</div>
+    <div class= "card-body">{{p.price}}</div>
+  </div>
+</div>

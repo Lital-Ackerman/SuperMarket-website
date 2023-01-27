@@ -1,0 +1,21 @@
+
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+        <div class="container-fluid">
+        <a class="navbar-brand mb-0 h1" routerLink="/home">
+        <img src="../../../assets/superMarioLogo.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top">
+        &nbsp;{{logoText}}
+        </a> 
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item"><a class="nav-link" routerLink="/displayOperations">A</a></li>
+          <li class="nav-item"><a class="nav-link" routerLink="/addOperation">B</a></li>
+          <li class="nav-item"><a class="nav-link" routerLink="/addOperation">C</a></li>
+        </ul>
+        <span *ngIf="userInfo.userProfile=='guest'" class="navbar-brand mb-0 h1 bi bi-person"> Hello {{userInfo.username}}</span>
+        <span *ngIf="userInfo.userProfile=='admin'" class="navbar-brand mb-0 h1 bi bi-person-gear"> Hello {{userInfo.username}} <span class="role">(Admin)</span></span>
+        <span *ngIf="userInfo.userProfile=='user'" class="navbar-brand mb-0 h1 bi bi-person-check"> Hello {{userInfo.username}}</span>
+    </div>
+    </nav>
+   
+    
+    
+
