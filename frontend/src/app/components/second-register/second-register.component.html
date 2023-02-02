@@ -2,19 +2,19 @@
     <h1>STEP-2</h1>
     <label>First Name:</label>
     <input #firstName="ngModel" name="firstName" [(ngModel)]="myUser.firstName" class= "form-control" type="text" placeholder="first name here..." required minlength="2" maxlength="20">
-    
+
     <label>Last Name:</label>
     <input #lastName="ngModel" name="lastName" [(ngModel)]="myUser.lastName" class= "form-control" type="text" placeholder="last name here..." required minlength="2" maxlength="20">
-    
+
     <label>City:</label>
     <select #city="ngModel" title="selectCities" name="city" [(ngModel)]="myUser.city"  class="form-select" required>
         <option disabled selected>Select City:</option>
-        <option *ngFor="let c of cities" value="c">{{c}}</option>
+        <option *ngFor="let c of cities" [value]="c">{{c}}</option>
     </select>
-    
+
     <label>Street:</label>
     <input #street="ngModel" name="street" [(ngModel)]="myUser.street" class= "form-control" type="text" placeholder="street here..." required minlength="2" maxlength="20">
-    
+
     <!-- <button class="btn btn-primary" [disabled]="myForm2.invalid" type="submit" >Submit</button> -->
     <button class="btn btn-primary" type="submit" >Submit</button>
 
@@ -42,7 +42,7 @@
             <span class="bi bi-exclamation-circle-fill" *ngIf="lastName.errors['maxlength']"> Street Name must be less than 20 characters</span>
         </span>
     </div>
-    
+
     <!-- <a [routerLink]="['/', {outlets: {signBar:['registerA']}}]">STEP 2-></a> -->
     <!-- [routerLink]="['/', {outlets: {signBar:['login']}}]" -->
 </form>

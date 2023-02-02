@@ -1,6 +1,8 @@
+
+
 <section>
   <div class="input-group">
-    <input #searchInput [(ngModel)]="searchProductName" name="searchProduct" type="text" class="form-control" placeholder="Search Product" (input)="onSearch(searchProductName)">
+    <input title="search" #searchInput="ngModel" [(ngModel)]="searchProductName" name="searchProduct" type="search" class="form-control" [placeholder]="checkOut?'Search In Reciept' : 'Search Product'" (input)="onSearch(searchProductName)">
     <div class="input-group-append">
       <button title="searchBtn" class="btn btn-secondary" >
         <i class="bi bi-search"></i>
@@ -8,34 +10,39 @@
     </div>
   </div>
 
+  <div class="adminDiv" *ngIf="isAdmin">
+    <app-admin-panel></app-admin-panel>
+  </div>
 
+<div class="cartDiv" *ngIf="!isAdmin">
 <div class="cartHeader">
-  <h1>My Cart</h1>
+  <h1>My Cart</h1><a href="" *ngIf="checkOut" [routerLink]="['/', {outlets: {primary:['products']}}]" (click)="goBack()">Back To Shop</a>
   <hr>
 </div>
 
-<div class="cartBody">
+<div #cartBody class="cartBody">
   <table>
-
     <thead>
       <th>Name</th>
       <th>Price</th>
       <th>Quantity</th>
       <th>Sum</th>
     </thead>
-
       <tbody>
-        <tr *ngFor="let d of myCartList">
-          <td>{{d.productName}}</td>
-          <td>{{d.price}}</td>
-          <td>{{d.quantity}}</td>
-          <td>{{d.totalPerProduct}}</td>
+        <tr *ngFor="let i of myCartContent">
+          <td [innerHTML]="checkOut? (i.productName| highLighter:searchProductName:'partial'): i.productName"></td>
+          <td>{{i.price}}</td>
+          <td>{{i.quantity}}</td>
+          <td>{{i.totalPerProduct}}</td>
+          <button *ngIf="!checkOut" type="button" (click)="DeleteItems(i.itemId)">X</button>
         </tr>
       </tbody>
   </table>
 </div>
-
-  <h4>Total: {{total}}</h4>
-  <button class="btn btn-primary" type="button">Order</button>
-
+<div class="cartFooter">
+<button *ngIf="!checkOut" type="button" (click)="DeleteItems('all')" [disabled]="myCartContent.length==0">Delete All</button>
+<h4>Total: {{total}} NIS</h4>
+<button *ngIf="!checkOut" class="btn btn-primary" type="button" (click)="onCheckOut()" [disabled]="myCartContent.length==0">CheckOut</button>
+</div>
+</div>
 </section>

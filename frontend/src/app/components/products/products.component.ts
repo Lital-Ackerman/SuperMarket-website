@@ -14,14 +14,17 @@ import { UsersService } from 'src/app/services/users.service';
   styleUrls: ['./products.component.css'],
 })
 export class ProductsComponent implements OnInit {
+  isAdmin= this.usersService.myUser.role==1 ?true :false;
+
   categories:Category[];
-  products:Product[];
+  products:Product[]=[];
   imageUrl= "http://localhost:5000/api/products/images/"
+  productsMessage:string="Choose category to find your product..."
 
   constructor(
   private categeriesService:CategoriesService,
   private productsService:ProductsService,
-  private userService:UsersService,
+  private usersService:UsersService,
   private cartsService:CartsService,
   private matDialog:MatDialog){}
 
@@ -32,22 +35,37 @@ export class ProductsComponent implements OnInit {
     )
 
     this.productsService.productsEmitter.subscribe(
-      (products)=>{this.products=products;}
+      (products)=>{this.products=products;
+        console.log(products)
+      if(this.products.length==0) this.productsMessage="No products match your search"
+      }
     )
 
-    console.log(this.userService.myUser)
+    console.log(this.usersService.myUser)
 
   }
 
   showProducts(categoryId:number){
     console.log(categoryId);
     this.productsService.getProductsByCategory(categoryId).subscribe({
-      next:(value)=>{this.products=value; console.log(this.products)},
+      next:(value)=>{
+        this.products=value;
+        console.log(this.products)
+        if(this.products.length==0)
+                this.productsMessage="No products match this category"
+      },
       error: (error)=>{console.log(error)}}
     )
   }
 
   selectProduct(selectedProduct:any){
+    if(this.isAdmin){
+      console.log("hey Admin");
+      console.log(selectedProduct);
+      this.productsService.productDataToEdit(selectedProduct)
+      // .subscribe((value:any)=>{console.log(value)})
+    }
+    else {
     console.log(selectedProduct)
     this.matDialog.open(PopUpProductComponent, {
       "width": '300px',
@@ -55,6 +73,7 @@ export class ProductsComponent implements OnInit {
       "data": selectedProduct,
       "autoFocus": false
     });  }
+  }
 
 
 }

@@ -31,6 +31,12 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CartsService } from './services/carts.service';
 import { CategoriesService } from './services/categories.service';
 import { itemsService } from './services/items.service';
+import { DialogsModule } from "@progress/kendo-angular-dialog";
+import { ButtonsModule } from "@progress/kendo-angular-buttons";
+import { HighlighterPipe} from './methods/high-lighter.pipe';
+import { SuccessOrderComponent } from './components/success-order/success-order.component';
+import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
+import { UserActionsComponent } from './components/user-actions/user-actions.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +56,11 @@ import { itemsService } from './services/items.service';
     CartComponent,
     ProductsComponent,
     NotFoundComponent,
-    PopUpProductComponent
+    PopUpProductComponent,
+    HighlighterPipe,
+    SuccessOrderComponent,
+    AdminPanelComponent,
+    UserActionsComponent
   ],
   imports: [
     BrowserModule,
@@ -58,7 +68,9 @@ import { itemsService } from './services/items.service';
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
-    MatDialogModule
+    MatDialogModule,
+    ButtonsModule,
+    DialogsModule
   ],
   providers: [
     OrdersService,

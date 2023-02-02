@@ -31,6 +31,19 @@ color: rgb(53, 51, 56);
 
 }
 
-li{
+/* li{
   cursor:pointer
+} */
+
+.activeCategort{
+  border:transparent;
+  background-color: transparent;
+  font-size: 1em;
 }
+
+.activeCategort:focus, .activeCategort:hover{
+  color: green;
+  font-weight: bold;
+  text-decoration: underline;
+}
+

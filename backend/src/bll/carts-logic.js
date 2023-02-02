@@ -18,9 +18,19 @@ async function openNewCart(newCart){
  `, [newCart.userId, newCart.cartDate])
 }
 
+async function completeCart(cartId){
+    const result= await dal.executeQueryAsync(`
+    UPDATE carts 
+    SET isCompleted=1
+    WHERE cartId=?
+    `, [cartId]);
+    console.log(result);
+    return result;
+ }
+
 async function getCartInfo(cartId){
  return await dal.executeQueryAsync(`
- SELECT products.productName, products.price, itemspercart.quantity, products.price*itemspercart.quantity as totalPerProduct, itemspercart.cartId 
+ SELECT products.productName, products.productId, products.price, itemspercart.itemId, itemspercart.quantity, products.price*itemspercart.quantity as totalPerProduct, itemspercart.cartId 
  FROM products INNER JOIN itemspercart 
  ON products.productId= itemspercart.productId 
  AND itemspercart.cartId= ? 
@@ -30,5 +40,6 @@ async function getCartInfo(cartId){
 module.exports={
     openNewCart,
     getCartInfo,
-    getOpenCart
+    getOpenCart,
+    completeCart
 }

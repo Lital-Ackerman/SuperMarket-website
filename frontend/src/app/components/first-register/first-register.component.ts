@@ -9,7 +9,7 @@ import { UsersService } from 'src/app/services/users.service';
   styleUrls: ['./first-register.component.css']
 })
 export class FirstRegisterComponent implements AfterViewInit {
-  myUser= new User(); 
+  myUser= new User();
   idExist:boolean;
   matchPasswords:boolean;
   validEmail:boolean;
@@ -19,7 +19,7 @@ export class FirstRegisterComponent implements AfterViewInit {
   @ViewChild ('username') username:HTMLInputElement;
 
   constructor(private router: Router, private usersService:UsersService){}
-  
+
   ngAfterViewInit(): void {
     console.log(this.confirmPassword)
   }
@@ -36,7 +36,7 @@ checkId(){
         :this.idExist=false;
         console.log(this.idExist);
 
-        
+
       },
       error:(err)=>{console.log(err)}
     })
@@ -46,7 +46,7 @@ ValidateEmail(){
    (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(this.username.value))
    ? this.validEmail= true
    : this.validEmail= false
-   
+
    this.usersService.isUsernameExist(this.myUser.username)
    .subscribe({
     next:(value)=>{
@@ -60,10 +60,10 @@ ValidateEmail(){
     },
     error: (err)=>{console.log(err)}})
 
-   
+
 }
 
-
+ 
 checkMatchPass(){
   this.matchPasswords=false;
 
@@ -74,7 +74,7 @@ checkMatchPass(){
   console.log(this.matchPasswords)
   console.log(this.confirmPassword.value)
   console.log(this.password.value)
-  
+
 }
 
  secondRegister(){

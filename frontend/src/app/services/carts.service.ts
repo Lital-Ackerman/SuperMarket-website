@@ -18,34 +18,45 @@ private usersService: UsersService) { }
 BASE_URL= environment.cartsBaseUrl;
 cartContent:any;
 cartId:number;
+cartCheckOut:boolean= false;
+cartTotal:number;
 statusEmitter= new EventEmitter<any>();
 // cartIdEmitter= new EventEmitter<any>();
 
 
-getStatus(id:number, firstName:string): Observable<any>{
+getStatus(userId:number, firstName:string): Observable<any>{
   console.log("getStatus");
-  return this.http.get(`${this.BASE_URL}/orderStatus/${id}`)
+  return this.http.get<any>(`${this.BASE_URL}/orderStatus/${userId}`)
     .pipe(tap((value)=>{
-      console.log(value);
+      this.cartId= value.data.cartId;
+      console.log(this.cartId);
       this.statusEmitter.emit({value, firstName});
       }))
     }
 
-openNewCart(): Observable<Cart>{
+openNewCart(userId:number): Observable<Cart>{
   console.log(this.usersService.myUser.userId)
-  return this.http.post<Cart>(`${this.BASE_URL}`, {userId: this.usersService.myUser.userId})
+  return this.http.post<Cart>(`${this.BASE_URL}`, {userId: userId})
     .pipe(tap((value)=>{
+      console.log(value)
       this.cartId= value.cartId;
       // this.cartIdEmitter.emit(value.cartId);
     }))
 }
 
-findOpenCart(): Observable<any>{
-  return this.http.get<any>(`${this.BASE_URL}/openCart/${this.usersService.myUser.userId}`)
+// findOpenCart(userId:number): Observable<any>{
+//   return this.http.get<any>(`${this.BASE_URL}/openCart/${userId}`)
+//      .pipe(tap((value)=>{
+//       // this.cartContent= value;
+//       this.cartId= value;
+
+//      }))
+// }
+
+getCartContent(): Observable<any>{
+  return this.http.get<any>(`${this.BASE_URL}/cartContent/${this.cartId}`)
      .pipe(tap((value)=>{
       this.cartContent= value;
-      this.cartId= value[0].cartId;
-
      }))
 }
 }

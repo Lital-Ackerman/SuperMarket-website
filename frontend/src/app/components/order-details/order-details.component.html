@@ -1,1 +1,49 @@
-<p>order-details works!</p>
+<div class="orderDiv">
+<h1>Order</h1><hr>
+<form (ngSubmit)="onOrder()" #orderForm="ngForm">
+  <h2>Shipping Details</h2>
+  <!-- <label>City:</label>
+  <select (dblclick)="autoSelect('shipCity')" #shipCity="ngModel" title="selectCities" name="shipCity" [(ngModel)]="orderInfo.shipCity"  class="form-select" required>
+      <option disabled>Select City:</option>
+      <option *ngFor="let c of cities" [value]="c">{{c}}</option>
+  </select> -->
+  <label>City:</label>
+  <input (dblclick)="autoSelect('shipCity')" #shipCity="ngModel" title="selectCities" name="shipCity" [(ngModel)]="orderInfo.shipCity"  class="form-control" required minlength="2" maxlength="20">
+
+
+  <label>Street</label>
+  <input (dblclick)="autoSelect('shipStreet')" #shipStreet="ngModel" type="text" title="selectShipStreet" name="shipStreet" [(ngModel)]="orderInfo.shipStreet" class="form-control" required minlength="2" maxlength="20">
+
+  <label>Shipping Date</label>
+  <input (blur)="checkShipDate()" #shipDate="ngModel" type="date" title="selectShipDate" name="shipDate" [(ngModel)]="orderInfo.shipDate" class="form-control" required [min]="minShipDate|date:'yyyy-MM-dd'">
+
+<h2>Payments</h2>
+<label>Credit Card</label>
+<input #creditCard="ngModel" type="number"  title="creditCard" name="creditCard" [(ngModel)]="orderInfo.creditCard" class="form-control" required min="10000000" max="1000000000000000000">
+<button #orderBtn [disabled]="orderForm.invalid" class="btn btn-primary" type="submit">Order</button>
+
+<div *ngIf="orderForm.invalid" class="valMessage3">
+  <br/><h5>validation messages- 3:</h5>
+  <span *ngIf="shipCity.errors && shipCity.touched">
+      <span class="bi bi-exclamation-circle-fill" *ngIf="shipCity.errors['required']"> Missing City</span>
+      <span class="bi bi-exclamation-circle-fill" *ngIf="shipCity.errors['minlength']||shipCity.errors['maxlength']"> City Name should be 2-20 characters</span>
+    </span>
+
+  <span *ngIf="shipStreet.errors && shipStreet.touched">
+      <span class="bi bi-exclamation-circle-fill" *ngIf="shipStreet.errors['required']"> Missing Street</span>
+      <span class="bi bi-exclamation-circle-fill" *ngIf="shipStreet.errors['minlength']||shipStreet.errors['maxlength']"> Street Name should be 2-20 characters</span>
+  </span>
+
+  <span *ngIf="shipDate.touched">
+      <span class="bi bi-exclamation-circle-fill" *ngIf="shipDate.errors && shipDate.errors['required']"> Missing Shipping Date</span>
+      <span class="bi bi-exclamation-circle-fill" *ngIf="shipDate.errors && shipDate.errors['min']"> Please choose a Future Date</span>
+      <span class="bi bi-exclamation-circle-fill" *ngIf="busyShipDate"> Busy Day. Please select another ship day.</span>
+  </span>
+
+  <span *ngIf="creditCard.errors && creditCard.touched">
+      <span class="bi bi-exclamation-circle-fill" *ngIf="creditCard.errors['required']"> Missing credit Card</span>
+      <span class="bi bi-exclamation-circle-fill" *ngIf="creditCard.errors['min']||creditCard.errors['max']"> credit Card should be 8-19 digits</span>
+  </span>
+</div>
+</form>
+</div>

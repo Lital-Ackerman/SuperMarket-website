@@ -6,18 +6,20 @@ const itemsLogic= require("../bll/items-logic");
 const usersLogic= require("../bll/users-logic");
 const Cart = require("../models/cart");
 
-router.get("/orderStatus/:id", async (request, response)=>{
+router.get("/orderStatus/:userId", async (request, response)=>{
     try{
-        const id= request.params.id;
-        const openCart= await cartsLogic.getOpenCart(id);
+        const userId= request.params.userId;
+        const openCart= await cartsLogic.getOpenCart(userId);
         if(openCart.length>0) {
             console.log(openCart[0].cartId)
             const openCartTotal= await itemsLogic.getCartSum(openCart[0].cartId);
+            console.log("openCartTotal");
+            console.log(openCartTotal);
             openCart[0].total= openCartTotal[0].total
             response.send({resType: 1, data: openCart[0]})
         }
         else{
-            const lastOrder= await ordersLogic.getLastOrder(id);
+            const lastOrder= await ordersLogic.getLastOrder(userId);
             console.log(lastOrder)
             lastOrder.length>0
             ? response.send({resType: 2, data: lastOrder[0]})
@@ -44,17 +46,37 @@ router.post("/", async (request, response)=>{
     }
 })
 
-router.get("/openCart/:userId", async (request, response)=>{
+// router.get("/openCart/:userId", async (request, response)=>{
+//     try{
+//         const userId= +request.params.userId;
+//         console.log(userId)
+//         const carts= await cartsLogic.getOpenCart(userId);
+//         console.log(carts[0].cartId);
+//         const cartId= carts[0].cartId;
+//         response.send(cartId)
+//         if(carts) {
+//             const cartContent= await cartsLogic.getCartInfo(carts[0].cartId);
+//             console.log(cartContent)
+//             response.send(cartContent)
+//         }
+//     }
+//     catch(err){
+//         console.log(err);
+//         response.status(500).send({message: "No Data Available. Server Error"})
+//     }
+// })
+
+router.get("/cartContent/:cartId", async (request, response)=>{
     try{
-        const userId= +request.params.userId;
-        console.log(userId)
-        const carts= await cartsLogic.getOpenCart(userId);
-        console.log(carts[0].cartId)
-        if(carts) {
-            const cartContent= await cartsLogic.getCartInfo(carts[0].cartId);
-            console.log(cartContent)
-            response.send(cartContent)
-        }
+        const cartId= +request.params.cartId;
+        console.log(cartId)
+        const cartContent= await cartsLogic.getCartInfo(cartId);
+        console.log(cartContent)
+        // if(carts) {
+        //     const cartContent= await cartsLogic.getCartInfo(carts[0].cartId);
+        //     console.log(cartContent)
+        response.send(cartContent)
+        // }
     }
     catch(err){
         console.log(err);

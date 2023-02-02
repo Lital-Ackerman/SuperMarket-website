@@ -1,0 +1,17 @@
+<form (ngSubmit)="handleProduct()" #adminForm="ngForm">
+  <button *ngIf="mode=='edit'" type="button" (click)="addMode()">+</button>
+  <h1 *ngIf="mode=='add'">Add New Product</h1>
+  <h1 *ngIf="mode=='edit'">Edit Product</h1>
+  <hr>
+  <label>Product Name</label>
+  <input class="form-control" name="productName" [(ngModel)]="myProduct.productName" placeholder="Product Name">
+  <label>Product ID</label>
+  <input class="form-control" name="productId" [(ngModel)]="myProduct.productId" placeholder="Product ID">
+  <label>Price</label>
+  <input class="form-control" name="price" [(ngModel)]="myProduct.price" placeholder="Product Price">
+  <label>Image</label>
+  <input class="form-control" name="image" title="imageSelect" type="file">
+  <label>Category</label>
+  <input class="form-control" name="categoryId" [(ngModel)]="myProduct.categoryId" placeholder="Product Category">
+  <button class="btn btn-primary" type="submit">Save</button>
+</form>

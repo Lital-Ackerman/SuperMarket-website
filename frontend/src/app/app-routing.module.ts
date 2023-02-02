@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AboutComponent } from './components/about/about.component';
+import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 import { CartComponent } from './components/cart/cart.component';
 import { FirstRegisterComponent } from './components/first-register/first-register.component';
 import { HomeComponent } from './components/home/home.component';
@@ -12,6 +13,7 @@ import { OrderDetailsComponent } from './components/order-details/order-details.
 import { ProductsComponent } from './components/products/products.component';
 import { SecondRegisterComponent } from './components/second-register/second-register.component';
 import { ShopComponent } from './components/shop/shop.component';
+import { UserActionsComponent } from './components/user-actions/user-actions.component';
 
 const routes: Routes = [
   {
@@ -56,9 +58,21 @@ const routes: Routes = [
   //   component: ShopComponent,
   //   outlet: 'mainBar'
   // },
+  // {
+  //   path: 'userActions',
+  //   component: UserActionsComponent,
+  //   outlet: 'leftBar'
+
+  // },
   {
     path: 'cart',
     component: CartComponent,
+    outlet: 'leftBar'
+
+  },
+  {
+    path: 'adminPanel',
+    component: AdminPanelComponent,
     outlet: 'leftBar'
 
   },
@@ -69,9 +83,9 @@ const routes: Routes = [
 
   },
   {
-    path: 'order',
-    component: OrderDetailsComponent,
-    outlet: 'mainBar',
+    path: 'orderDetails',
+    component: OrderDetailsComponent
+    // outlet: 'mainBar',
   },
 
   {

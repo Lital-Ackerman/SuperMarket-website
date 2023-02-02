@@ -1,0 +1,17 @@
+section{
+  height: 100%;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-rows: repeat(12, 1fr);
+    grid-template-columns: repeat(6, 1fr);
+    padding: 10px;
+}
+
+nav{
+  background-color: #e3f2fd;
+}
+
+.input-group{
+  grid-row: span 1;
+  grid-column: span 6;
+  }

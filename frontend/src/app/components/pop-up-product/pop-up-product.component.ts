@@ -28,6 +28,8 @@ export class PopUpProductComponent implements OnInit {
   }
 
 addToCart(){
+  if(!this.cartsService.cartCheckOut){
+
 console.log(this.units);
 let itemInfo:Item= {
   productName: this.selectedProduct.productName,
@@ -42,5 +44,5 @@ console.log(itemInfo)
 this.itemsService.postItemToCart(itemInfo).subscribe({
   next:(value)=>{console.log(value)},
   error:(error)=>{console.log(error)}
-  })}
+  })}}
 }

@@ -1,5 +1,5 @@
 import { literalMap } from '@angular/compiler';
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Credentials } from 'src/app/models/credentials';
 import User from 'src/app/models/user';
@@ -23,6 +23,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   orderStatus:any;
   removeLogin= false;
   loginWarning:string;
+  cartStatus:string;
 
   constructor(
     private usersService: UsersService,
@@ -30,6 +31,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     private router: Router,
     private activatedRoute: ActivatedRoute
     ){
+      //user from registration
       this.myUser= this.router.getCurrentNavigation()?.extras.state?.['data'];
       console.log(this.myUser);
     }
@@ -48,7 +50,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
 goRegister(){
-  this.router.navigate([{outlets:{signBar: 'registerA' }}])
+  this.router.navigate([{outlets:{leftBar: 'registerA' }}])
 }
 
   onLogin(){
@@ -59,12 +61,17 @@ goRegister(){
         next:(value:any)=>{
           this.myUser= value;
           this.isLogged= true ;
+          localStorage["userToken"]= value.token;
+
+          if(this.myUser.role==0){
           console.log(this.myUser);
           console.log(this.isLogged);
           this.shopBtn.nativeElement.disabled=false;
-          localStorage["userToken"]= value.token;
           this.raiseStatusEmitter();
           // this.usersService.myUser= this.myUser;
+          }else{
+            this.router.navigate([{outlets:{primary: 'products',leftBar: 'cart' }}])
+          }
       },
         error: (err)=>{
           console.log(err);
@@ -80,35 +87,31 @@ goRegister(){
       }
 
       raiseStatusEmitter(){
-        this.cartsService.getStatus(this.myUser.userId, this.myUser.firstName).subscribe(
-            (value)=>{console.log(value)
-            value.resType==1
-            ? this.shopBtnText= "Resume Shopping"
-            : this.shopBtnText= "Start Shopping"
-            }
-          )
+        this.cartsService.getStatus(this.myUser.userId, this.myUser.firstName).subscribe({
+          next:(value)=>{console.log(value);
+            if(value.resType==1){
+            this.shopBtnText= "Resume Shopping";
+            this.cartStatus= "old";
+          }else{
+            this.shopBtnText= "Start Shopping";
+            this.cartStatus= "new";
+          }},
+          error:(error)=>{console.log(error)}
+        })
       }
 
       goShop(){
-        if(this.shopBtnText=="Start Shopping"){
-         this.cartsService.openNewCart().subscribe({
-            next:(value)=>{console.log(value.cartId)
-              this.router.navigate([{outlets:{leftBar:['cart'], primary: ['products']}}], {state:{newCartId:value.cartId}});
-              // this.router.navigate([{outlets:{leftBar:['cart'], primary: ['products']}}], {state:{newCartId:value.cartId}});
-            },
+        if(this.cartStatus=="new"){
+         this.cartsService.openNewCart(this.myUser.userId).subscribe({
+            next:(value)=>{console.log(value.cartId);},
             error: (error)=>{console.log(error)}
             })}
-        else{
-          this.cartsService.findOpenCart().subscribe({
-            next:(value)=>{console.log(value);
-              this.router.navigate([{outlets:{leftBar:['cart'], primary: ['products']}}], {state:{openCartInfo:value}});
-            },
-            error: (error)=>{console.log(error)}
-          })
+        this.router.navigate([{outlets:{leftBar:['cart'], primary: ['products']}}], {state:{cartStatus: this.cartStatus}});
+
         }
 
 
       }
 
-  }
+
 

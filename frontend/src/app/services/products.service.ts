@@ -11,8 +11,10 @@ import { Product } from '../models/product';
 export class ProductsService {
 
   BASE_URL= environment.productsBaseUrl;
+  productData:Product;
   constructor(private http:HttpClient) { }
   productsEmitter= new EventEmitter<any>();
+  editProductEmitter= new EventEmitter<any>();
 
 
   getAmountOfProducts():Observable<number>{
@@ -30,5 +32,16 @@ export class ProductsService {
     }))
   }
 
+  productDataToEdit(productInfo:Product){
+    this.productData= productInfo;
+    this.editProductEmitter.emit(productInfo)
+  }
+
+  postNewProduct(productName:string): Observable<Product[]>{
+    return this.http.get<Product[]>(`${this.BASE_URL}/productsBySearch/${productName}`)
+    .pipe(tap((product)=>{
+      this.productsEmitter.emit(product)
+    }))
+  }
 
 }

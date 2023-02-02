@@ -1,0 +1,7 @@
+<div class="orderMessageDiv" #order>
+  <h1>We got your order!</h1>
+  <h2>Download your reciept <a role="button" (click)="downloadReceipt()">Here</a></h2>
+  <button mat-button [mat-dialog-close] class="btn btn-primary" type="button" [routerLink]="[{outlets:{primary: ['main'], leftBar: ['login'] }}]">OK</button>
+
+</div>
+

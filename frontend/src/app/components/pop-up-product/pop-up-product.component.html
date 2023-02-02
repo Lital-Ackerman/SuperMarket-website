@@ -2,5 +2,5 @@
 <h1>Add <span>{{myProduct}}</span> To Cart</h1>
 <label>units:  </label>
 <input #unitsInput="ngModel" [(ngModel)]="units" title='unitsInput' type="number" class="form-control" min="0" max="10">
-<button type="button" class="btn btn-primary" (click)="addToCart()">Add</button>
+<button mat-button [mat-dialog-close] type="button" class="btn btn-primary" (click)="addToCart()">Add</button>
 </div>
