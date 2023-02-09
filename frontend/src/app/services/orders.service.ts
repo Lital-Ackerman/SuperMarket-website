@@ -20,8 +20,12 @@ BASE_URL= environment.ordersBaseUrl
     return this.http.post<Order>(`${this.BASE_URL}/newOrder`, orderInfo);
   }
 
-  validateShipDate(shipDate:Date): Observable<any>{
-    return this.http.get<any>(`${this.BASE_URL}/validateShipDate/${shipDate}`);
+  // validateShipDate(): Observable<any>{
+  //   return this.http.get<any>(`${this.BASE_URL}/validateShipDate/${shipDate}`);
+  // }
+
+  busyDates(): Observable<any[]>{
+    return this.http.get<any[]>(`${this.BASE_URL}/busyDates`);
   }
 
 

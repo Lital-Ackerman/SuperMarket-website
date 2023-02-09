@@ -1,4 +1,15 @@
 section{
   height: 100%;
- 
+
+}
+
+.bi-exclamation-circle-fill{
+  color: rgb(204, 98, 98);
+  display: block;
+  font-size: 11px;
+}
+
+.form-control{
+  width:100%;
+  margin-bottom: 20px;
 }

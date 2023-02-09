@@ -13,6 +13,8 @@ import { CartsService } from 'src/app/services/carts.service';
 import { UsersService } from 'src/app/services/users.service';
 import { OrdersService } from 'src/app/services/orders.service';
 import { Order } from 'src/app/models/order';
+import { DatePipe } from '@angular/common';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -21,14 +23,14 @@ import { Order } from 'src/app/models/order';
   styleUrls: ['./success-order.component.css']
 })
 export class SuccessOrderComponent{
-  // customerOrder= this.cartsService.cartContent;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public orderInfo:any,
     private cartsService: CartsService,
     private userService: UsersService,
-    private ordersService: OrdersService
-    // private dialogRef:MatDialogRef<>
+    private ordersService: OrdersService,
+    private datePipe: DatePipe,
+    private router: Router
     ){}
 
     index=1
@@ -40,7 +42,6 @@ export class SuccessOrderComponent{
                 item.totalPerProduct
               ])
 
-    // additionalR= [{col1: 'Total', col2: '100', col3: 'ALL'}, {col1: 'vat', col2: '17', col3: '%'}]
 
     props = {
       outputType: OutputType.Save,
@@ -74,19 +75,20 @@ export class SuccessOrderComponent{
           address: "Jaffa St, Jerusalem",
           phone: "053-7389200",
           email: "superMario@gmail.com",
-          website: "www.superMario.com",
+          email_1: "www.superMario.com",
+          website: ''
       },
       contact: {
           label: "For:",
           name: `${this.userService.myUser.firstName} ${this.userService.myUser.lastName}`,
           address: `${this.userService.myUser.city}, ${this.userService.myUser.street}`,
-          email: `${this.userService.myUser.username}`,
+          phone: `${this.userService.myUser.username}`,
       },
       invoice: {
           label: "Cart #: ",
           num: +`${this.cartsService.cartId}`,
-          invDate: `Order Date: ${new Date()}`,
-          invGenDate: `Shipping Date: ${this.ordersService.myOrder.shipDate}`,
+          invDate: `Order Date: ${this.datePipe.transform(new Date(), 'dd/MM/yyyy')}`,
+          invGenDate: `Shipping Date: ${this.datePipe.transform(this.ordersService.myOrder.shipDate, 'dd/MM/yyyy')}`,
           headerBorder: false,
           tableBodyBorder: false,
           header: [
@@ -107,23 +109,6 @@ export class SuccessOrderComponent{
             { title: "Total"}
           ],
           table: this.itemsData,
-          // additionalRows: this.additionalR,
-          // additionalRows: [{
-          //     col1: 'Total:',
-          //     col2: '100',
-          //     col3: 'ALL',
-          //     style: {
-          //         fontSize: 14 //optional, default 12
-          //     }
-          // },
-          // {
-          //     col1: 'VAT:',
-          //     col2: '17',
-          //     col3: '%',
-          //     style: {
-          //         fontSize: 10 //optional, default 12
-          //     }
-          // }],
           invDescLabel: `Total:  ${this.ordersService.myOrder.orderSum} NIS`,
           invDesc: `Thank you for shopping in Super Mario!`
       },
@@ -136,33 +121,13 @@ export class SuccessOrderComponent{
 
 
   downloadReceipt(){
-    // console.log(this.cartsService.cartContent)
-    // let receiptList= this.cartsService.cartContent;
-    // receiptList= receiptList.map((item:any) => {
-    //   [item.productName, item.quantity, item.totalPerProduct]
-    // })
-    // console.log(receiptList)
-    // const doc= new jsPDF();
-
-    // let bodyData= [];
-    // for (let i = 0; i < receiptList.length; i++) {
-    //   bodyData.push([receiptList[i].productName, receiptList[i].quantity, receiptList[i].totalPerProduct]);
-    // }
-    // console.log(bodyData)
-
-    // let imgData= 'data;:image/jpeg;base64', '+Base64.encode('')';
-    // doc.addImage(imgData, 'JPEG', 15, 40, 180, 160)
-    // autoTable(doc, {html: 'this.myTable'})
-    // doc.text('Reciept From SuperMario', 10, 10);
-    // autoTable(doc,{
-    //   head:[['Product','Price', 'Quantity', 'Total']],
-    //   body:bodyData    })
-    // doc.text('Reciept From SuperMario', 10, 20 );
-    // // doc.addImage(HTMLImageElement, 'JPEG', 2, 2, )
-
-    // doc.save("myReceipt_SuperMario.pdf");
-
     jsPDFInvoiceTemplate(this.props)
+   }
+
+   goHome(){
+    // this.router.navigate([{outlets:{primary: ['main'], leftBar: ['login']}}], {state:{isJustFinishedShop: true}});
+    location.reload()
+
    }
 }
 

@@ -1,48 +1,33 @@
 <form (ngSubmit)="completeSign()" #myForm2="ngForm">
-    <h1>STEP-2</h1>
-    <label>First Name:</label>
-    <input #firstName="ngModel" name="firstName" [(ngModel)]="myUser.firstName" class= "form-control" type="text" placeholder="first name here..." required minlength="2" maxlength="20">
-
-    <label>Last Name:</label>
-    <input #lastName="ngModel" name="lastName" [(ngModel)]="myUser.lastName" class= "form-control" type="text" placeholder="last name here..." required minlength="2" maxlength="20">
-
-    <label>City:</label>
+    <h1>Registration-STEP 2</h1>
+    <!-- <label>First Name:</label> -->
+    <input #firstName="ngModel" name="firstName" [(ngModel)]="myUser.firstName" class= "form-control" type="text" placeholder="First Name" required minlength="2" maxlength="20">
+    <span *ngIf="firstName.errors && firstName.touched">
+      <span class="bi bi-exclamation-circle-fill" *ngIf="firstName.errors['required']"> Missing First Name</span>
+      <span class="bi bi-exclamation-circle-fill" *ngIf="firstName.errors['minlength'] || firstName.errors['maxlength']"> First Name must be between 2-20 characters</span>
+  </span>
+    <!-- <label>Last Name:</label> -->
+    <input #lastName="ngModel" name="lastName" [(ngModel)]="myUser.lastName" class= "form-control" type="text" placeholder="Last Name" required minlength="2" maxlength="20">
+    <span *ngIf="lastName.errors && lastName.touched">
+      <span class="bi bi-exclamation-circle-fill" *ngIf="lastName.errors['required']"> Missing Last Name</span>
+      <span class="bi bi-exclamation-circle-fill" *ngIf="lastName.errors['minlength'] || lastName.errors['maxlength']"> Last Name must be between 2-20 characters</span>
+  </span>
+    <!-- <label>City:</label> -->
     <select #city="ngModel" title="selectCities" name="city" [(ngModel)]="myUser.city"  class="form-select" required>
-        <option disabled selected>Select City:</option>
+        <option disabled value="">Select City:</option>
         <option *ngFor="let c of cities" [value]="c">{{c}}</option>
     </select>
+    <span *ngIf="city.errors && city.touched">
+        <span class="bi bi-exclamation-circle-fill" *ngIf="city.errors['required']"> Missing City</span>
+    </span>
 
-    <label>Street:</label>
+    <!-- <label>Street:</label> -->
     <input #street="ngModel" name="street" [(ngModel)]="myUser.street" class= "form-control" type="text" placeholder="street here..." required minlength="2" maxlength="20">
+    <span *ngIf="street.errors && street.touched">
+        <span class="bi bi-exclamation-circle-fill" *ngIf="street.errors['required']"> Missing Street</span>
+        <span class="bi bi-exclamation-circle-fill" *ngIf="street.errors['minlength'] || street.errors['maxlength']"> Street Name must be between 2-20 characters</span>
+    </span>
 
-    <!-- <button class="btn btn-primary" [disabled]="myForm2.invalid" type="submit" >Submit</button> -->
-    <button class="btn btn-primary" type="submit" >Submit</button>
+    <button class="btn btn-primary" [disabled]="myForm2.invalid" type="submit" >Submit</button>
 
-    <div *ngIf="myForm2.invalid" class="valMessage2">
-        <br/><h5>validation messages- 2:</h5>
-        <span *ngIf="firstName.errors && firstName.touched">
-            <span class="bi bi-exclamation-circle-fill" *ngIf="firstName.errors['required']"> Missing First Name</span>
-            <span class="bi bi-exclamation-circle-fill" *ngIf="firstName.errors['minlength']"> First Name must be more than 2 characters</span>
-            <span class="bi bi-exclamation-circle-fill" *ngIf="firstName.errors['maxlength']"> First Name must be less than 20 characters</span>
-        </span>
-
-        <span *ngIf="lastName.errors && lastName.touched">
-            <span class="bi bi-exclamation-circle-fill" *ngIf="lastName.errors['required']"> Missing Last Name</span>
-            <span class="bi bi-exclamation-circle-fill" *ngIf="lastName.errors['minlength']"> Last Name must be more than 2 characters</span>
-            <span class="bi bi-exclamation-circle-fill" *ngIf="lastName.errors['maxlength']"> Last Name must be less than 20 characters</span>
-        </span>
-
-        <span *ngIf="city.errors && city.touched">
-            <span class="bi bi-exclamation-circle-fill" *ngIf="city.errors['required']"> Missing City</span>
-        </span>
-
-        <span *ngIf="street.errors && street.touched">
-            <span class="bi bi-exclamation-circle-fill" *ngIf="street.errors['required']"> Missing Street</span>
-            <span class="bi bi-exclamation-circle-fill" *ngIf="lastName.errors['minlength']"> Street Name must be more than 2 characters</span>
-            <span class="bi bi-exclamation-circle-fill" *ngIf="lastName.errors['maxlength']"> Street Name must be less than 20 characters</span>
-        </span>
-    </div>
-
-    <!-- <a [routerLink]="['/', {outlets: {signBar:['registerA']}}]">STEP 2-></a> -->
-    <!-- [routerLink]="['/', {outlets: {signBar:['login']}}]" -->
 </form>

@@ -12,8 +12,6 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { OrderDetailsComponent } from './components/order-details/order-details.component';
 import { ProductsComponent } from './components/products/products.component';
 import { SecondRegisterComponent } from './components/second-register/second-register.component';
-import { ShopComponent } from './components/shop/shop.component';
-import { UserActionsComponent } from './components/user-actions/user-actions.component';
 
 const routes: Routes = [
   {

@@ -1,7 +1,19 @@
-/* .logoText{
-    margin: 20px 0 0 10px;
-} */
+
 
 .role{
     font-size: 15px;
 }
+
+.input-group{
+  width: 250px;
+}
+
+.contactLink{
+  float: right;
+
+}
+
+/* .helloUser{
+    position: absolute;
+    right: 0px
+} */

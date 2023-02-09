@@ -4,6 +4,7 @@ const productsLogic= require("../bll/products-logic");
 const path = require("path");
 const fileUpload = require("express-fileupload"); 
 const fs=require("fs");
+const Product = require("../models/product");
 
 router.use(fileUpload());
 
@@ -54,6 +55,43 @@ router.get("/productsBySearch/:productName", async (request, response)=>{
         const productName= request.params.productName;
         const products= await productsLogic.getProductsByProductName(productName);
         response.send(products);
+    }
+    catch(err){
+        console.log(err);
+        response.status(500).send({message: "No Data Available. Server Error"})
+    }
+})
+
+router.post("/postNewProduct", async (request, response)=>{
+    try{
+        console.log(request.body)
+        console.log("request.body")
+        const newProduct= new Product(request.body);
+        const error= newProduct.validate();
+        if(error)
+            response.status(400).send(error);
+        else{
+            const isExist= await productsLogic.getProductsByProductName(newProduct.productName);
+            if(isExist.length==0){
+                const result= await productsLogic.postNewProduct(newProduct, request.files ? request.files.imageFile : null);
+                newProduct.productId= result.insertId;
+                response.status(201).send(newProduct);
+            }else{
+                response.status(400).send({message: 'Product Name is already Exist'})
+            }
+        }
+    }
+    catch(err){
+        console.log(err);
+        response.status(500).send({message: "No Data Available. Server Error"})
+    }
+})
+router.put("/editProduct", async (request, response)=>{
+    try{
+        console.log(request.body)
+        const modifiedProduct= new Product(request.body);
+        const result= await productsLogic.editProduct(modifiedProduct, request.files ? request.files.imageFile : null);
+        response.send(result);
     }
     catch(err){
         console.log(err);

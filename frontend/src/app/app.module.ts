@@ -18,13 +18,12 @@ import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
 import { FirstRegisterComponent } from './components/first-register/first-register.component';
 import { SecondRegisterComponent } from './components/second-register/second-register.component';
-import { ShopComponent } from './components/shop/shop.component';
 import { OrderDetailsComponent } from './components/order-details/order-details.component';
 import { MainComponent } from './components/main/main.component';
 import { CartComponent } from './components/cart/cart.component';
 import { ProductsComponent } from './components/products/products.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {  } from '@angular/material';
+// import {  } from '@angular/material';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { PopUpProductComponent } from './components/pop-up-product/pop-up-product.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -36,7 +35,13 @@ import { ButtonsModule } from "@progress/kendo-angular-buttons";
 import { HighlighterPipe} from './methods/high-lighter.pipe';
 import { SuccessOrderComponent } from './components/success-order/success-order.component';
 import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
-import { UserActionsComponent } from './components/user-actions/user-actions.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { DatePipe } from '@angular/common';
+import { PopMessageComponent } from './components/pop-message/pop-message.component';
+
 
 @NgModule({
   declarations: [
@@ -50,7 +55,6 @@ import { UserActionsComponent } from './components/user-actions/user-actions.com
     HomeComponent,
     FirstRegisterComponent,
     SecondRegisterComponent,
-    ShopComponent,
     OrderDetailsComponent,
     MainComponent,
     CartComponent,
@@ -60,8 +64,7 @@ import { UserActionsComponent } from './components/user-actions/user-actions.com
     HighlighterPipe,
     SuccessOrderComponent,
     AdminPanelComponent,
-    UserActionsComponent
-  ],
+    PopMessageComponent  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -70,7 +73,11 @@ import { UserActionsComponent } from './components/user-actions/user-actions.com
     BrowserAnimationsModule,
     MatDialogModule,
     ButtonsModule,
-    DialogsModule
+    DialogsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   providers: [
     OrdersService,
@@ -80,7 +87,9 @@ import { UserActionsComponent } from './components/user-actions/user-actions.com
     CategoriesService,
     itemsService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-    MatDialog
+    MatDialog,
+    Location,
+    DatePipe
 
   ],
   bootstrap: [AppComponent]

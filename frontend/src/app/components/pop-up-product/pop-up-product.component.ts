@@ -14,7 +14,6 @@ import { ProductsService } from 'src/app/services/products.service';
 export class PopUpProductComponent implements OnInit {
   myProduct= this.selectedProduct.productName;
   units:number;
-  // cartId:number;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public selectedProduct:Product,

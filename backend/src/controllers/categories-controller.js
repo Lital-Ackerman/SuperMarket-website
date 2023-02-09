@@ -15,6 +15,18 @@ router.get("/", async (request, response)=>{
     }
 })
 
+router.post("/", async (request, response)=>{
+    try{
+        const newCategoryName= request.body.newName;
+        const result= await categoriesLogic.postNewCategory(newCategoryName);
+        response.send(result);
+    }
+    catch(err){
+        console.log(err);
+        response.status(500).send({message: "No Data Available. Server Error"})
+    }
+})
+
 
 
 

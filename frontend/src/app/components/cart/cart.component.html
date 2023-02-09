@@ -1,18 +1,26 @@
 
 
 <section>
-  <div class="input-group">
+  <!-- <div class="input-group">
     <input title="search" #searchInput="ngModel" [(ngModel)]="searchProductName" name="searchProduct" type="search" class="form-control" [placeholder]="checkOut?'Search In Reciept' : 'Search Product'" (input)="onSearch(searchProductName)">
     <div class="input-group-append">
       <button title="searchBtn" class="btn btn-secondary" >
         <i class="bi bi-search"></i>
       </button>
     </div>
-  </div>
+  </div> -->
 
   <div class="adminDiv" *ngIf="isAdmin">
     <app-admin-panel></app-admin-panel>
   </div>
+
+  <!-- <p><button kendoButton *ngIf="!opened" (click)="openClose(true)">Open</button></p>
+  <p>
+      The state of the Window is <b>{{ windowState }}</b>
+  </p>
+  <kendo-window [top]="100" [left]="50" title="Change my state" [(state)]="windowState" *ngIf="opened" (close)="openClose(false)">
+      <p style="text-align: center;">I can be minimized and maximized!</p>
+  </kendo-window> -->
 
 <div class="cartDiv" *ngIf="!isAdmin">
 <div class="cartHeader">
@@ -34,7 +42,7 @@
           <td>{{i.price}}</td>
           <td>{{i.quantity}}</td>
           <td>{{i.totalPerProduct}}</td>
-          <button *ngIf="!checkOut" type="button" (click)="DeleteItems(i.itemId)">X</button>
+          <button *ngIf="!checkOut" title="deleteBtn" type="button" (click)="DeleteItems(i.itemId)" class="bi bi-x-square-fill"></button>
         </tr>
       </tbody>
   </table>

@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { Order } from 'src/app/models/order';
 import { CartsService } from 'src/app/services/carts.service';
 import { itemsService } from 'src/app/services/items.service';
@@ -14,17 +14,20 @@ import { SuccessOrderComponent } from '../success-order/success-order.component'
   templateUrl: './order-details.component.html',
   styleUrls: ['./order-details.component.css']
 })
-export class OrderDetailsComponent {
+export class OrderDetailsComponent implements OnInit {
   cities= environment.cities;
+  creditRegEx= environment.patterns.creditAllTypes
+
   @ViewChild ('orderBtn') orderBtn:ElementRef;
+  // @ViewChild ('shipDate') shipDate:ElementRef;
   minShipDate=new Date();
   busyShipDate:boolean;
   orderInfo= new Order(
     this.usersService.myUser.userId,
     this.cartsService.cartId,
     this.cartsService.cartTotal
-
     );
+    myBusyDates:Date[] = [];
 
     constructor(
       private productsService: ProductsService,
@@ -34,19 +37,30 @@ export class OrderDetailsComponent {
       private matDialog:MatDialog
     ){}
 
+    ngOnInit(): void {
+        this.orderService.busyDates().subscribe({
+          next:(value)=>{console.log(value)
+            value.forEach(d=>this.myBusyDates.push(new Date(d.shipDate)))
+            console.log(this.myBusyDates)},
+          error: (err)=>{console.log(err)}
+        })
+      }
+
   autoSelect(prop:any){
     prop=="shipCity" ? this.orderInfo.shipCity=this.usersService.myUser.city :"";
     prop=="shipStreet" ? this.orderInfo.shipStreet=this.usersService.myUser.street :"";
+    // console.log(this.shipDate)
+
   }
 
-  checkShipDate(){
-    this.orderService.validateShipDate(this.orderInfo.shipDate).subscribe({
-      next:(ordersInDate)=>{console.log(ordersInDate);
-        this.busyShipDate= ordersInDate.length>2 ? true :false;
-      },
-      error: (err)=>{console.log(err)}
-    })
-  }
+  // checkShipDate(){
+  //   this.orderService.validateShipDate(this.orderInfo.shipDate).subscribe({
+  //     next:(ordersInDate)=>{console.log(ordersInDate);
+  //       this.busyShipDate= ordersInDate.length>2 ? true :false;
+  //     },
+  //     error: (err)=>{console.log(err)}
+  //   })
+  // }
 
   onOrder(){
     // this.orderInfo.isCompleted= 1;
@@ -64,6 +78,7 @@ export class OrderDetailsComponent {
   }
 
   orderStatusMessage(){
+
     this.matDialog.open(SuccessOrderComponent, {
       "width": '300px',
       "maxHeight": '90vh',
@@ -72,4 +87,15 @@ export class OrderDetailsComponent {
     })
   }
 
+
+
+myDatesFilter = (d: Date): boolean => {
+if(d==null){
+  const day = new Date().getDay();
+  return !this.myBusyDates && day !== 6 && day !== 5 ;
+} else{
+  const time=d.getTime();
+  const day = d.getDay();
+  return !this.myBusyDates.find(x=>x.getTime()==time) && day !== 6 && day !== 5}
+}
 }

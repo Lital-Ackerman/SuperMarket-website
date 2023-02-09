@@ -2,10 +2,31 @@
   padding: 20px;;
 }
 
-.valMessage3{
+h2{
+  margin-bottom: 0 !important
+}
+
+.bi-exclamation-circle-fill{
   color: rgb(204, 98, 98);
+  display: block;
+  font-size: 11px;
 }
 
 span{
   display: block;
 }
+
+.form-control{
+  width:100%;
+  margin-bottom: 20px;
+}
+
+.datePicker{
+  width:70%;
+  display: inline;
+}
+
+/* .mat-mdc-button-touch-target{
+  padding: 0;
+
+} */

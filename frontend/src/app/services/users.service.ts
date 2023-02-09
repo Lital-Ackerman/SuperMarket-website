@@ -17,7 +17,18 @@ myUser:User;
 constructor(private http: HttpClient) { }
 userEmitter= new EventEmitter<User>();
 
+isTokenValid(lastUserToken:string): Observable<any>{
+    console.log(lastUserToken)
+    return this.http.post<any>(`${this.BASE_URL}/public/autoLogin`, {lastUserToken})
+    .pipe(tap((value)=>{
+      console.log(value);
+      if(value.message!= "Invalid Token") {
+        this.myUser= value;
+        this.userEmitter.emit(value)
+      }
 
+    }))
+}
   isLogged(userInfo:Credentials): Observable<User>{
     return this.http.post<User>(`${this.BASE_URL}/public/login`, userInfo)
     .pipe(tap((value)=>{
@@ -30,8 +41,8 @@ userEmitter= new EventEmitter<User>();
 
 
 
-    isIdExist(userId:number):Observable<User[]|undefined>{
-      return this.http.get<User[]|undefined>(`${this.BASE_URL}/public/idValidation/${userId}`);
+    isIdExist(userId:number):Observable<User[]>{
+      return this.http.get<User[]>(`${this.BASE_URL}/public/idValidation/${userId}`);
     }
 
     isUsernameExist(username:string):Observable<User[]|undefined>{

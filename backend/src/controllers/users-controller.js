@@ -4,8 +4,33 @@ const usersLogic= require("../bll/users-logic");
 const verifyLoggedIn = require("../middleware/verify-logged-in");
 const Credentials = require("../models/credentials");
 const User = require("../models/user");
+const jwt = require("jsonwebtoken");
+
 
 //Login Process
+router.post("/public/autoLogin", async (request, response)=>{
+    try{
+        console.log("token")
+        console.log(request.body)
+
+
+        const lastUserToken= request.body.lastUserToken;
+        let lastUserData= jwt.decode(lastUserToken);
+        console.log(lastUserData);
+        const expiryToken= new Date(0);
+        expiryToken.setUTCSeconds(lastUserData.exp);
+            if(expiryToken>new Date()){
+                response.send(lastUserData.user)
+            }else{
+                response.send({message: "Invalid Token"})
+            }
+        }
+    catch(err){
+        console.log(err);
+        response.status(500).send({message: "No Data Available. Server Error"})
+    }
+})
+
 router.post("/public/login", async (request, response)=>{
     try{
         const credentials= new Credentials(request.body);
@@ -16,7 +41,7 @@ router.post("/public/login", async (request, response)=>{
         console.log(loggedInUser)
         loggedInUser
             ?response.send(loggedInUser)
-            :response.status(404).send({message: `Incorrect username or password`})
+            :response.status(404).send({message: `Incorrect username or password. Try again.`})
     }
     catch(err){
         console.log(err);
@@ -28,12 +53,13 @@ router.post("/public/login", async (request, response)=>{
 router.get("/public/idValidation/:id", async (request, response)=>{
     try{
         const userId= request.params.id;
+        console.log(userId)
         let isIdExist= await usersLogic.isIdExist(userId);
-        if(isIdExist){
+        // if(isIdExist){
             response.send(isIdExist)
-        }else{
-            response.send(null)
-        }
+        // }else{
+        //     response.send(null)
+        // }
     }
     catch(err){
         console.log(err);

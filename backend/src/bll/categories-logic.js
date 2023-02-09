@@ -11,9 +11,19 @@ async function getCategories(userId){
     return result;
 }
 
+async function postNewCategory(newCategoryName){
+    const result= await dal.executeQueryAsync(`
+    INSERT INTO categories
+    VALUES (DEFAULT, ?)
+    `, [newCategoryName]);
+    console.log(result)
+    return result;
+}
+
 
 
 module.exports={
-    getCategories
+    getCategories,
+    postNewCategory
 
 }

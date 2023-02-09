@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Category } from 'src/app/models/category';
 import { Product } from 'src/app/models/product';
 import { CategoriesService } from 'src/app/services/categories.service';
@@ -20,6 +20,7 @@ export class ProductsComponent implements OnInit {
   products:Product[]=[];
   imageUrl= "http://localhost:5000/api/products/images/"
   productsMessage:string="Choose category to find your product..."
+  clickMe:boolean=false;
 
   constructor(
   private categeriesService:CategoriesService,
@@ -29,20 +30,39 @@ export class ProductsComponent implements OnInit {
   private matDialog:MatDialog){}
 
   ngOnInit(){
+    this.getCategories();
+    this.showProducts(1);
+
+    this.productsService.modificationEmitter.subscribe(
+      (categoryId)=>{
+        this.getCategories();
+        this.showProducts(categoryId);
+        // let categoryBtn= document.getElementById(`${categoryId}`) as HTMLButtonElement
+        // console.log(categoryBtn)
+        // (document.getElementById(`${categoryId}`) as HTMLButtonElement).click()
+
+      }
+      );
+
+    this.productsService.productsEmitter.subscribe(
+      (products)=>{
+      this.products=products;
+      console.log(products)
+      if(this.products.length==0) this.productsMessage="No products match your search"
+      }
+    )
+    console.log(this.usersService.myUser)
+  }
+
+  // ngAfterViewInit(): void {
+  //   (document.getElementById('1') as HTMLButtonElement).click()
+  // }
+
+  getCategories(){
     this.categeriesService.getCategories().subscribe({
       next:(value)=>{this.categories=value},
       error: (error)=>{console.log(error)}}
     )
-
-    this.productsService.productsEmitter.subscribe(
-      (products)=>{this.products=products;
-        console.log(products)
-      if(this.products.length==0) this.productsMessage="No products match your search"
-      }
-    )
-
-    console.log(this.usersService.myUser)
-
   }
 
   showProducts(categoryId:number){
@@ -62,6 +82,7 @@ export class ProductsComponent implements OnInit {
     if(this.isAdmin){
       console.log("hey Admin");
       console.log(selectedProduct);
+      this.productsMessage= "select product to Edit"
       this.productsService.productDataToEdit(selectedProduct)
       // .subscribe((value:any)=>{console.log(value)})
     }

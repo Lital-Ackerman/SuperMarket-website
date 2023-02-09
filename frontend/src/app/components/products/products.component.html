@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-sm navbar-light bg-light">
   <div class="container-fluid">
-  <ul *ngFor="let c of categories" class="navbar-nav mr-auto">
-    <li class="nav-item"><a class="nav-link"><button class="activeCategort" (click)="showProducts(c.categoryId)">{{c.categoryName}}</button></a></li>
+  <ul  class="navbar-nav mr-auto">
+    <li *ngFor="let c of categories" class="nav-item"><a class="nav-link"><button [id]="c.categoryId" class="activeCategory" (click)="showProducts(c.categoryId)">{{c.categoryName}}</button></a></li>
   </ul>
 </div>
 </nav>

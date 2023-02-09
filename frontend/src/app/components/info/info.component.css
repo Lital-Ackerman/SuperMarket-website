@@ -8,7 +8,9 @@
 .ordersInfo, .productsInfo, .dinamnicMessage, .imageInfo {
     grid-row: span 3;
     grid-column: span 4;
-    border: 1px solid;
+    border: 2px solid rgb(221, 210, 210);
+    border-radius: 10px;
+    margin-bottom: 5px;
     font-size: 20px;
 }
 

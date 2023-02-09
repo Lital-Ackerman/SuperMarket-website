@@ -1,28 +1,33 @@
 <div class="loginDiv">
+
 <div class="btnDiv">
     <button #shopBtn type="button" class="shopBtn btn btn-primary" (click)="goShop()">{{shopBtnText}}</button>
-    <!-- [routerLink]="['/', {outlets: {leftBar:['cart'], primary: ['products']}}]">{{shopBtnText}}</button> -->
 </div>
+
 <div *ngIf="!myUser" class="formDiv">
 <form (ngSubmit)="onLogin()" #loginForm="ngForm">
-    <h1>Registered?</h1>
-    <label>username (email):</label>
-    <input #username="ngModel" name="username" [(ngModel)]="userLogin.username" class="form-control" type="email" placeholder="email here..." required minlength="6" maxlength="30">
 
-    <label>password:</label>
-    <input #password="ngModel" name="password" [(ngModel)]="userLogin.password" class= "form-control" type="text" placeholder="password here..." required minlength="8" maxlength="30">
+    <h1>Registered?</h1>
+    <!-- <label>username (email):</label> -->
+    <input #username="ngModel" name="username" [(ngModel)]="userLogin.username" class="form-control" type="email" [pattern]="emailRegEx" placeholder="username@yourEmail.com" required minlength="6" maxlength="30">
+
+
+    <!-- <label>password:</label> -->
+    <input #password="ngModel" name="password" [(ngModel)]="userLogin.password" class= "form-control" type="text"  placeholder="password" required minlength="8" maxlength="30">
+
 
     <button [disabled]="loginForm.invalid" class="btn btn-primary" type="submit">Login</button>
-    <!-- <button class="btn btn-primary" type="button" (click)="check()">check</button> -->
-    <!-- <a routerLink="" (click)="goRegister()">Sign Up</a> -->
     <a [routerLink]="['/', {outlets: {leftBar:['registerA']}}]">Sign Up</a>
-</form>
-<br/>
-<div class="loginWarning">
-<span *ngIf="loginWarning" class="bi bi-exclamation-circle-fill">{{loginWarning}}</span>
+</form><br/>
+
+
+
+<div class="warningsDiv">
+<span *ngIf="loginWarning" class="bi bi-exclamation-circle-fill"> {{loginWarning}}</span>
 <span *ngIf="username.errors && username.touched">
   <span class="bi bi-exclamation-circle-fill" *ngIf="username.errors['required']"> Missing username</span>
   <span class="bi bi-exclamation-circle-fill" *ngIf="username.errors['minlength'] || username.errors['maxlength']"> username must be between 6-30 characters</span>
+  <span class="bi bi-exclamation-circle-fill" *ngIf="username.errors['pattern']"> username must be a valid address, e.g. me@mydomain.com</span>
 </span>
 <span *ngIf="password.errors && password.touched">
   <span class="bi bi-exclamation-circle-fill" *ngIf="password.errors['required']"> Missing password</span>
@@ -31,7 +36,6 @@
 </div>
 
 </div>
-<div *ngIf="myUser" class="logMessage">
-    <h1>You are logged In</h1>
-</div>
+
+  <div *ngIf="myUser" class="bounce2 bi bi-arrow-up"></div>
 </div>

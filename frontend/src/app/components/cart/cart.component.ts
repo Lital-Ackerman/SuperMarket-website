@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Item } from 'src/app/models/item';
 import { Product } from 'src/app/models/product';
@@ -8,6 +8,7 @@ import { ProductsService } from 'src/app/services/products.service';
 import { Location } from '@angular/common';
 import { HighlighterPipe } from 'src/app/methods/high-lighter.pipe';
 import { UsersService } from 'src/app/services/users.service';
+import { WindowState } from '@progress/kendo-angular-dialog';
 
 
 @Component({
@@ -18,15 +19,11 @@ import { UsersService } from 'src/app/services/users.service';
 export class CartComponent {
 isAdmin= this.usersService.myUser.role==1 ?true :false;
 total:number=0;
-searchProductName: string="";
 myCartContent:any[]=[];
 cartId:number;
 cartType:string;
 checkOut:boolean= false;
-// @ViewChild ('cartBody') cartBody:ElementRef;
-// @ViewChild ('nameInfo') nameInfo:ElementRef;
-// @ViewChild ('searchProductName') searchProductName:ElementRef;
-
+searchProductName="";
 
 
 constructor(
@@ -45,11 +42,11 @@ constructor(
   }
 
 
-
 ngOnInit(): void {
 if(this.cartType=="old") this.getContent();
 
 this.itemsService.itemsEmitter.subscribe(()=>{this.getContent()})
+this.productService.searchEmitter.subscribe((searchText)=>{this.searchProductName=searchText})
 }
 
 getContent(){
@@ -66,35 +63,40 @@ getContent(){
 }
 
 DeleteItems(deleteThis: Item|string){
-  // this.searchProductName="";
+  this.searchProductName="";
   this.itemsService.deleteItems(deleteThis).subscribe({
     next:(value)=>{console.log(value)},
     error:(error)=>{console.log(error)}
   })
 }
 
-onSearch(productName:string){
-  // console.log(this.cartBody.nativeElement.innerHTML)
-  // let newHTML= `${this.cartBody.nativeElement.innerHTML}| highLighter:searchProductName:'partial'`
-  // this.cartBody.nativeElement.innerHTML= newHTML;
-  if(productName.length>0){
-    this.productService.getProductBySearch(productName).subscribe({
-      next:(value)=>{console.log(value)},
-      error:(error)=>{console.log(error)}
-    })
-}}
+// onSearch(productName:string){
+//   // console.log(this.cartBody.nativeElement.innerHTML)
+//   // let newHTML= `${this.cartBody.nativeElement.innerHTML}| highLighter:searchProductName:'partial'`
+//   // this.cartBody.nativeElement.innerHTML= newHTML;
+//   if(productName.length>0){
+//     this.productService.getProductBySearch(productName).subscribe({
+//       next:(value)=>{console.log(value)},
+//       error:(error)=>{console.log(error)}
+//     })
+// }}
 
 onCheckOut(){
   this.searchProductName="";
+  this.productService.clearEmitter.emit('check');
   if(this.myCartContent.length>0){
-  this.checkOut= true;
-  this.cartsService.cartCheckOut= true;
-  this.router.navigate([{outlets:{primary: ['orderDetails'] }}]);
+    this.productService.checkOut= true;
+    this.checkOut= true;
+    this.cartsService.cartCheckOut= true;
+    this.router.navigate([{outlets:{primary: ['orderDetails'] }}]);
   }
 }
 
 goBack(){
+  this.searchProductName="";
   this.checkOut= false;
+  this.productService.checkOut= false;
+  this.productService.clearEmitter.emit('cart');
   this.cartsService.cartCheckOut= false;
 }
 
@@ -103,14 +105,8 @@ clearSearch(){
 
 }
 
+
 }
 
 
 
-// public windowWidth = 600;
-//   public windowHeight = 500;
-//   public opened = true;
-
-//   public openClose(isOpened: boolean): void {
-//     this.opened = isOpened;
-//   }

@@ -32,11 +32,22 @@ router.post("/newOrder", async (request, response)=>{
     }
 })
 
-router.get("/validateShipDate/:shipDate", async (request, response)=>{
+// router.get("/validateShipDate/:shipDate", async (request, response)=>{
+//     try{
+//         const shipDate= request.params.shipDate;
+//         const ordersInDate= await ordersLogic.validateShipDate(shipDate);
+//         response.send(ordersInDate);
+//     }
+//     catch(err){
+//         console.log(err);
+//         response.status(500).send({message: "No Data Available. Server Error"})
+//     }
+// })
+router.get("/busyDates", async (request, response)=>{
     try{
-        const shipDate= request.params.shipDate;
-        const ordersInDate= await ordersLogic.validateShipDate(shipDate);
-        response.send(ordersInDate);
+        const busyDates= await ordersLogic.getBusyDates();
+        console.log(busyDates)
+        response.send(busyDates);
     }
     catch(err){
         console.log(err);

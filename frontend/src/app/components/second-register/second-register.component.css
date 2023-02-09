@@ -1,5 +1,5 @@
-.valMessage2{
-    color: rgb(204, 98, 98);
+.bi-exclamation-circle-fill{
+  color: rgb(204, 98, 98);
 }
 
 span{
@@ -8,4 +8,9 @@ span{
 
 form{
   padding: 20px;
+}
+
+.form-control{
+  width:100%;
+  margin-bottom: 20px;
 }

@@ -34,11 +34,20 @@ async function postNewOrder(newOrder){
     return result;
 }
 
-async function validateShipDate(shipDate){
-    console.log(shipDate)
+// async function validateShipDate(shipDate){
+//     console.log(shipDate)
+//     const result= await dal.executeQueryAsync(`
+//     SELECT * FROM orders
+//     WHERE shipDate='${shipDate}'
+//     `, []);
+//     return result;
+// }
+
+async function getBusyDates(){
     const result= await dal.executeQueryAsync(`
-    SELECT * FROM orders
-    WHERE shipDate='${shipDate}'
+        SELECT shipDate FROM orders 
+        GROUP by shipDate
+        HAVING COUNT(shipDate)>2;
     `, []);
     return result;
 }
@@ -47,5 +56,6 @@ module.exports={
     getAmountOfOrders,
     getLastOrder,
     postNewOrder,
-    validateShipDate
+    getBusyDates
+    // validateShipDate
 }

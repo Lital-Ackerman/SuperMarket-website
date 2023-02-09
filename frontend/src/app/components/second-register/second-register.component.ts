@@ -10,10 +10,10 @@ import { environment } from 'src/environment/environment';
   styleUrls: ['./second-register.component.css']
 })
 export class SecondRegisterComponent implements OnInit {
-  myUser= new User(); 
+  myUser= new User();
   dataFromStep1:User;
   cities= environment.cities;
-  
+
 
   constructor(private router:Router, private usersService: UsersService){
     this.dataFromStep1= this.router.getCurrentNavigation()?.extras.state?.['data'];
@@ -24,6 +24,7 @@ export class SecondRegisterComponent implements OnInit {
   }
 
 ngOnInit(): void {
+  this.myUser.city= "";
   this.myUser.userId= this.dataFromStep1.userId;
   this.myUser.username= this.dataFromStep1.username;
   this.myUser.password= this.dataFromStep1.password;
@@ -40,6 +41,6 @@ ngOnInit(): void {
         error:(err)=>console.log(err)
       })
     this.router.navigate([{outlets:{leftBar: 'login' }}], {state:{data: this.myUser}});
-    alert("complete")
+    // alert("complete")
   }
 }
