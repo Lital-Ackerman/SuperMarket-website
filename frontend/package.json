@@ -10,6 +10,7 @@
   },
   "private": true,
   "dependencies": {
+    "@angular-material-components/file-input": "^9.0.0",
     "@angular/animations": "^15.0.0",
     "@angular/cdk": "^15.1.1",
     "@angular/common": "^15.0.0",
@@ -23,6 +24,7 @@
     "@material/textfield": "^15.0.0-canary.684e33d25.0",
     "@progress/kendo-angular-buttons": "^11.0.0",
     "@progress/kendo-angular-dialog": "^11.0.0",
+    "jquery": "^3.6.3",
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.5.28",
     "jspdf-invoice-template": "^1.4.3",
@@ -35,6 +37,7 @@
     "@angular/cli": "~15.0.1",
     "@angular/compiler-cli": "^15.0.0",
     "@types/jasmine": "~4.3.0",
+    "@types/jquery": "^3.5.16",
     "jasmine-core": "~4.5.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.1.0",

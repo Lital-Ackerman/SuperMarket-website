@@ -18,15 +18,14 @@ const routes: Routes = [
     path: 'home',
     component: HomeComponent
   },
-  //   {
-  //   path: '',
-  //   redirectTo: "home",
-  //   pathMatch: 'full'
-  // },
+    {
+    path: '',
+    redirectTo: "home",
+    pathMatch: 'full'
+  },
   {
     path: 'main',
     component: MainComponent
-    // outlet: 'mainBar'
   },
   {
     path: 'info',
@@ -51,45 +50,29 @@ const routes: Routes = [
     component: SecondRegisterComponent,
     outlet: 'leftBar'
   },
-  // {
-  //   path: 'shop',
-  //   component: ShopComponent,
-  //   outlet: 'mainBar'
-  // },
-  // {
-  //   path: 'userActions',
-  //   component: UserActionsComponent,
-  //   outlet: 'leftBar'
-
-  // },
   {
     path: 'cart',
     component: CartComponent,
     outlet: 'leftBar'
-
   },
   {
     path: 'adminPanel',
     component: AdminPanelComponent,
     outlet: 'leftBar'
-
   },
   {
     path: 'products',
     component: ProductsComponent
-    // outlet: 'mainBar'
-
   },
   {
     path: 'orderDetails',
     component: OrderDetailsComponent
-    // outlet: 'mainBar',
   },
-
   {
     path: '**',
+    pathMatch: 'full',
     component: NotFoundComponent
-  }
+    }
 ];
 
 @NgModule({

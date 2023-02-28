@@ -1,7 +1,8 @@
 <div class="orderMessageDiv" #order>
   <h1>We got your order!</h1>
-  <h2>Download your reciept <a role="button" (click)="downloadReceipt()">Here</a></h2>
-  <button mat-button [mat-dialog-close] class="btn btn-primary" type="button" (click)="goHome()">OK</button>
-
+  <h2>Download your reciept <span (click)="downloadReceipt()">Here</span></h2>
+  <button mat-raised-button color="accent" [mat-dialog-close] class="btn btn-primary" type="button" (click)="goHome()">OK</button>
+  <br/><br/>
+  <mat-progress-bar mode="query" *ngIf="progBar"></mat-progress-bar>
 </div>
 

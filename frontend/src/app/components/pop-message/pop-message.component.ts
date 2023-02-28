@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
@@ -6,19 +6,15 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
   templateUrl: './pop-message.component.html',
   styleUrls: ['./pop-message.component.css']
 })
-export class PopMessageComponent implements OnInit{
+export class PopMessageComponent{
   constructor(
     @Inject(MAT_DIALOG_DATA) public message:any
   ){}
 
-  displayText:string;
 
-  ngOnInit(): void {
-    if(this.message=='Invalid Token'){
-      this.displayText= `
-      Your Login Session has expired.
-      Please Login Again`
-    }
+  refresh(){
+    if(this.message=='Your login session has expired')
+    location.reload();
   }
 
 }

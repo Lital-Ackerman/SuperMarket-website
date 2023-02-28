@@ -1,38 +1,42 @@
 <form (ngSubmit)="secondRegister()" #myForm1="ngForm">
-    <h1>Registration-STEP 1</h1>
+    <h1><i class="bi bi-person-fill-add"></i> SIGN-UP <span>(step 1)</span></h1>
 
-    <!-- <label>user ID:</label> -->
-    <input #userId="ngModel" name="userId" [(ngModel)]="myUser.userId" class="form-control" type="number" placeholder="user ID" required [pattern]="userIdRegEx" (blur)="checkId()">
-    <span *ngIf="userId.errors && userId.touched">
-      <span class="bi bi-exclamation-circle-fill" *ngIf="userId.errors['required']"> Missing user ID</span>
-      <span class="bi bi-exclamation-circle-fill" *ngIf="userId.errors['pattern']"> ID must be 9 digits</span>
-    </span>
-    <span class="bi bi-exclamation-circle-fill" *ngIf="idExist==true"> ID already exist</span>
+    <mat-form-field class="registerInputs" >
+      <mat-label>User ID</mat-label>
+      <input matInput  #userId="ngModel" name="userId" title="userId" [(ngModel)]="myUser.userId" type="number" required [pattern]="userIdRegEx" maxlength="9" (input)="checkId()">
+        <mat-error *ngIf="userId.touched && userId.errors && userId.errors['required']">Missing User ID</mat-error>
+        <mat-error *ngIf="userId.touched && userId.errors && userId.errors['pattern']">ID must be 9 digits</mat-error>
+        <span class="alreadyMessage bi bi-exclamation-circle-fill" *ngIf="!userId.errors && idExist"> ID already exist</span>
+      </mat-form-field>
 
-    <!-- <label>username(Email):</label> -->
-    <input #username="ngModel"  name="username" [(ngModel)]="myUser.username" class= "form-control" type="email" [pattern]="emailRegEx" placeholder="username@yourEmail.com" required minlength="6" maxlength="30" (blur)="ValidateEmail()">
-    <span *ngIf="username.errors && username.touched">
-      <span class="bi bi-exclamation-circle-fill" *ngIf="username.errors['required']"> Missing username</span>
-      <span class="bi bi-exclamation-circle-fill" *ngIf="username.errors['minlength'] || username.errors['maxlength']"> username must be between 6-30 characters</span>
-      <span class="bi bi-exclamation-circle-fill" *ngIf="username.errors['pattern']"> username must be a valid Eemail address, e.g. me@mydomain.com</span>
-    </span>
-    <span class="bi bi-exclamation-circle-fill" *ngIf="usernameExist==true"> Username already exist</span>
-    <!-- <label>Password:</label> -->
-    <input #password="ngModel"  name="password" [(ngModel)]="myUser.password" class= "form-control" type="text" placeholder="password" required [pattern]="passwordRegEx">
-    <span *ngIf="password.errors && password.touched">
-      <span class="bi bi-exclamation-circle-fill" *ngIf="password.errors['required']"> Missing password</span>
-      <!-- <span class="bi bi-exclamation-circle-fill" *ngIf="password.errors['minlength'] || password.errors['maxlength']"> Use 8 or more characters for your password</span> -->
-    <span class="bi bi-exclamation-circle-fill" *ngIf="password.errors['pattern']"> Please Use 8 or more characters with a mix of letters, numbers & symbols</span>
-    </span>
-    <!-- <label>Password Confirm:</label> -->
-    <input #confirmPassword="ngModel" name="confirmPassword" [(ngModel)]="myUser.confirmPassword" class="form-control" type="text" placeholder="confirm password" required>
-    <span *ngIf="confirmPassword.touched">
-      <span class="bi bi-exclamation-circle-fill" *ngIf="confirmPassword.errors && confirmPassword.errors['required']"> Missing Password Confirm</span>
-  </span>
-  <span class="bi bi-exclamation-circle-fill" *ngIf="confirmPassword.dirty && password.valid &&  myUser.confirmPassword!=myUser.password"> Passwords didn't match. Try again</span>
+
+    <mat-form-field class="registerInputs" >
+      <mat-label>Username (Email)</mat-label>
+        <input #username="ngModel" matInput name="username" [(ngModel)]="myUser.username" type="email" [pattern]="emailRegEx" placeholder="username@yourEmail.com" required minlength="6" maxlength="30" (blur)="ValidateEmail()">
+        <mat-error *ngIf="username.errors && username.touched && username.errors['required']">Missing Username</mat-error>
+        <mat-error *ngIf="username.errors && username.touched && (username.errors['minlength'] || username.errors['maxlength'])"> Username must be between 6-30 characters</mat-error>
+        <mat-error *ngIf="username.errors && username.touched &&!(username.errors['minlength'] || username.errors['maxlength']) && username.errors['pattern']">Invalid Email address</mat-error>
+        <span class="alreadyMessage bi bi-exclamation-circle-fill" *ngIf="!username.errors && usernameExist==true"> Username already exist</span>
+      </mat-form-field>
+
+    <mat-form-field class="registerInputs" >
+      <mat-label>Password</mat-label>
+        <input #password="ngModel" title="password" matInput name="password" [(ngModel)]="myUser.password" type="password" required [pattern]="passwordRegEx">
+        <mat-error *ngIf="password.errors && password.touched && password.errors['required']"> Missing password</mat-error>
+        <mat-error *ngIf="password.errors && password.touched && password.errors['pattern']"> Use 8 or more characters with a mix of letters, numbers & symbols</mat-error>
+    </mat-form-field>
+
+
+    <mat-form-field class="registerInputs" >
+      <mat-label>Password Confirm</mat-label>
+      <input #confirmPassword="ngModel" title="confirmPassword" matInput name="confirmPassword" [(ngModel)]="myUser.confirmPassword"  type="password" required>
+      <mat-error *ngIf="confirmPassword.errors && confirmPassword.touched && confirmPassword.errors['required']"> Missing password Confirm</mat-error>
+      <span class="alreadyMessage bi bi-exclamation-circle-fill" *ngIf="confirmPassword.dirty && !confirmPassword.errors && password.valid &&  myUser.confirmPassword!=myUser.password"> Passwords didn't match. Try again</span>
+      </mat-form-field>
+
 
     <br/>
-    <button class="btn btn-primary" [disabled]="myForm1.invalid || myUser.confirmPassword!=myUser.password || usernameExist|| idExist" type="submit">STEP 2 <i class="bi bi-arrow-right-circle"></i></button>
+    <button mat-raised-button color="primary" [disabled]="myForm1.invalid || myUser.confirmPassword!=myUser.password || usernameExist|| idExist" type="submit">STEP 2 <i class="bi bi-arrow-right-circle"></i></button>
   </form>
 
 

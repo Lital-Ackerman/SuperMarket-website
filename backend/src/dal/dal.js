@@ -7,15 +7,17 @@ const pool = db.createPool({
     database: "supermarketdb"
 });
 
+
+/**
+ * Send request to DB and return response.
+ */
 function executeQueryAsync(sqlCmd, values) {
     return new Promise((resolve, reject) => {
         pool.query(sqlCmd, values, (err, rows) => {
             if (err) {
-                // console.log(err);
                 reject(err);
             }
             else {
-                // console.log(rows);
                 resolve(rows);
             }
         });

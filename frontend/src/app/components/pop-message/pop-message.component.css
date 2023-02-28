@@ -1,8 +1,8 @@
 .popMessageDiv{
   padding: 20px;
+  text-align: center;
 }
 
 .btn{
   box-sizing: border-box;
-margin-left: 40%;
 }

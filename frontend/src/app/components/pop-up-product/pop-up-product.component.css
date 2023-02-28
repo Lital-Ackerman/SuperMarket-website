@@ -4,14 +4,24 @@
   margin-left: 20px;
 }
 
+h1{
+  font-family: 'Handlee', cursive;
+}
 
 .popUp{
 padding: 20PX;
+text-align: center;
+font-family: 'Unbounded', cursive;
 }
 
-.btn{
-  display: block;
-  margin-top: 20px;
+.popBtn{
+  display: inline;
+  margin: 20px auto;
+  font-family: 'Unbounded', cursive;
+  width: 30%;
+  margin-right: 10px;
+  text-align: center;
+  padding: 5px;
 }
 
 span{

@@ -1,33 +1,44 @@
 <form (ngSubmit)="completeSign()" #myForm2="ngForm">
-    <h1>Registration-STEP 2</h1>
-    <!-- <label>First Name:</label> -->
-    <input #firstName="ngModel" name="firstName" [(ngModel)]="myUser.firstName" class= "form-control" type="text" placeholder="First Name" required minlength="2" maxlength="20">
-    <span *ngIf="firstName.errors && firstName.touched">
-      <span class="bi bi-exclamation-circle-fill" *ngIf="firstName.errors['required']"> Missing First Name</span>
-      <span class="bi bi-exclamation-circle-fill" *ngIf="firstName.errors['minlength'] || firstName.errors['maxlength']"> First Name must be between 2-20 characters</span>
-  </span>
-    <!-- <label>Last Name:</label> -->
-    <input #lastName="ngModel" name="lastName" [(ngModel)]="myUser.lastName" class= "form-control" type="text" placeholder="Last Name" required minlength="2" maxlength="20">
-    <span *ngIf="lastName.errors && lastName.touched">
-      <span class="bi bi-exclamation-circle-fill" *ngIf="lastName.errors['required']"> Missing Last Name</span>
-      <span class="bi bi-exclamation-circle-fill" *ngIf="lastName.errors['minlength'] || lastName.errors['maxlength']"> Last Name must be between 2-20 characters</span>
-  </span>
-    <!-- <label>City:</label> -->
-    <select #city="ngModel" title="selectCities" name="city" [(ngModel)]="myUser.city"  class="form-select" required>
-        <option disabled value="">Select City:</option>
-        <option *ngFor="let c of cities" [value]="c">{{c}}</option>
-    </select>
-    <span *ngIf="city.errors && city.touched">
-        <span class="bi bi-exclamation-circle-fill" *ngIf="city.errors['required']"> Missing City</span>
-    </span>
+  <h1><i class="bi bi-person-fill-add"></i> SIGN-UP <span>(step 2)</span></h1>
 
-    <!-- <label>Street:</label> -->
-    <input #street="ngModel" name="street" [(ngModel)]="myUser.street" class= "form-control" type="text" placeholder="street here..." required minlength="2" maxlength="20">
-    <span *ngIf="street.errors && street.touched">
-        <span class="bi bi-exclamation-circle-fill" *ngIf="street.errors['required']"> Missing Street</span>
-        <span class="bi bi-exclamation-circle-fill" *ngIf="street.errors['minlength'] || street.errors['maxlength']"> Street Name must be between 2-20 characters</span>
-    </span>
+  <mat-form-field class="registerInputs" >
+      <mat-label>First Name</mat-label>
+      <input #firstName="ngModel" title="firstName" matInput name="firstName" [(ngModel)]="myUser.firstName" type="text" required minlength="2" maxlength="20">
+        <mat-error *ngIf="firstName.touched && firstName.errors && firstName.errors['required']">Missing First Name</mat-error>
+        <mat-error *ngIf="firstName.touched && firstName.errors && (firstName.errors['minlength']|| firstName.errors['maxlength'])">First Name must be between 2-20 characters</mat-error>
+  </mat-form-field>
 
-    <button class="btn btn-primary" [disabled]="myForm2.invalid" type="submit" >Submit</button>
 
+
+  <mat-form-field class="registerInputs" >
+    <mat-label>Last Name</mat-label>
+    <input #lastName="ngModel" title="lastName" matInput name="lastName" [(ngModel)]="myUser.lastName" type="text" required minlength="2" maxlength="20">
+      <mat-error *ngIf="lastName.touched && lastName.errors && lastName.errors['required']">Missing Last Name</mat-error>
+      <mat-error *ngIf="lastName.touched && lastName.errors && (lastName.errors['minlength']|| lastName.errors['maxlength'])">Last Name must be between 2-20 characters</mat-error>
+  </mat-form-field>
+
+
+  <mat-form-field appearance="fill" >
+      <mat-label>Choose City</mat-label>
+      <mat-select #city="ngModel" name="city" [(ngModel)]="myUser.city" required>
+        <mat-option *ngFor="let c of cities" [value]="c">{{c}}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="city.errors && city.touched && city.errors['required']">Missing City</mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="registerInputs" >
+      <mat-label>Street</mat-label>
+      <input #street="ngModel" matInput title="street" name="street" [(ngModel)]="myUser.street" type="text" required minlength="2" maxlength="20">
+        <mat-error *ngIf="street.touched && street.errors && street.errors['required']">Missing Street Name</mat-error>
+        <mat-error *ngIf="street.touched && street.errors && (street.errors['minlength']|| street.errors['maxlength'])">Street Name must be between 2-20 characters</mat-error>
+  </mat-form-field>
+
+
+
+  <button #registerBtn mat-raised-button color="primary" [disabled]="myForm2.invalid"  type="submit" >Submit</button>
+  <div class="errorsDiv2" #errorsDiv2></div>
 </form>
+
+<a class="backTo1" (click)="goBackToStep1()"><i class="bi bi-person-fill-up"></i> Back To STEP-1</a>
+
+

@@ -1,9 +1,13 @@
 .orderMessageDiv{
   padding: 20px;
+  text-align: center;
+  font-family: 'Unbounded', cursive;
+
 }
 
-a{
+h2>span{
   color: blue;
   text-decoration: underline;
+  cursor: pointer
 }
 

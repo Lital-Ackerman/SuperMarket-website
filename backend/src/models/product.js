@@ -19,14 +19,8 @@ class Product{
 
     validate(){
         const result= Product.#validateSchema.validate(this, {abortEarly: false});
-        if(result.error){
-            const errObj= {};
-            for(const err of result.error.details){
-                errObj[err.context.key]= err.message;
-            }
-            return errObj
-        }
-        return null
+        return result.error ? result.error.details.map(err => err.message) : null;
+
     }
 }
 

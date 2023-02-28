@@ -1,7 +1,6 @@
 
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
-        <!-- <div class="container-fluid"> -->
-        <a class="navbar-brand mb-0 h1" routerLink="/home">
+        <a class="logoText navbar-brand mb-0 h1">
         <img src="../../../assets/superMarioLogo.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top">
         &nbsp;{{logoText}}
         </a>
@@ -13,6 +12,8 @@
         <ul class="navbar-nav mr-auto">
           <li class="nav-item contactLink"><a class="nav-link" routerLink="home">Home</a></li>
           <li *ngIf="userInfo.username!='Guest'" class="nav-item"><a class="nav-link" routerLink="home" (click)="logOut()">LogOut</a></li>
+          <li *ngIf="userInfo.username=='Guest'" class="nav-item"><a class="nav-link" [routerLink]="['/', {outlets: {leftBar:['login']}}]">Login</a></li>
+          <li *ngIf="userInfo.username=='Guest'" class="nav-item"><a class="nav-link" [routerLink]="['/', {outlets: {leftBar:['registerA']}}]">Sign Up</a></li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Contact Us
@@ -24,20 +25,20 @@
             </div>
           </li>
         </ul>
-        <div *ngIf="cartProducts" class="input-group">
-        <input title="search" #searchInput="ngModel" [(ngModel)]="searchProductName" name="searchProduct" type="search" class="form-control" [placeholder]="placeholderText" (input)="onSearch(searchProductName)">
-           <div class="input-group-append">
-            <button title="searchBtn" class="btn btn-secondary" >
+
+          <div *ngIf="cartComp" class="input-group">
+           <input title="search" #searchInput="ngModel" [(ngModel)]="searchProductName" name="searchProduct" type="search" class="search-hover" [placeholder]="placeholderText" (input)="onSearch(searchProductName)">
+             <div class="input-group-append">
+            <button title="searchBtn" #searchInput class="btn btn-secondary" >
                <i class="bi bi-search"></i>
             </button>
             </div>
           </div>
-          <div class="collapse navbar-collapse justify-content-end">
-          <span *ngIf="userInfo.userProfile=='guest'" class="navbar-brand mb-0 h1 bi bi-person helloUser" > Hello {{userInfo.username}}</span>
-        <span *ngIf="userInfo.userProfile=='admin'" class="navbar-brand mb-0 h1 bi bi-person-gear helloUser"> Hello {{userInfo.username}} <span class="role">(Admin)</span></span>
-        <span *ngIf="userInfo.userProfile=='user'" class="navbar-brand mb-0 h1 bi bi-person-check helloUser"> Hello {{userInfo.username}}</span>
-      </div>
-    </div>
+
+            <div class="collapse navbar-collapse justify-content-end">
+            <span class="navbar-brand mb-0 h1 bi helloUser" [ngClass]="{'bi-person': userInfo.userProfile=='guest', 'bi-person-gear': userInfo.userProfile=='admin', 'bi-person-check': userInfo.userProfile=='user'}" > Hello {{userInfo.username}}<span *ngIf="userInfo.userProfile=='admin'" class="role"> (Admin)</span></span>
+            </div>
+        </div>
     </nav>
 
 

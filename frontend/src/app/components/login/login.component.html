@@ -1,41 +1,34 @@
-<div class="loginDiv">
+<div #loginDiv class="loginDiv">
 
-<div class="btnDiv">
-    <button #shopBtn type="button" class="shopBtn btn btn-primary" (click)="goShop()">{{shopBtnText}}</button>
-</div>
+  <div class="btnDiv">
+      <button mat-raised-button color="accent" #shopBtn type="button" class="shopBtn" (click)="goShop()">{{shopBtnText}}</button>
+  </div>
 
-<div *ngIf="!myUser" class="formDiv">
-<form (ngSubmit)="onLogin()" #loginForm="ngForm">
+  <div *ngIf="!myUser" class="formDiv">
+    <form (ngSubmit)="onLogin()" #loginForm="ngForm">
 
-    <h1>Registered?</h1>
-    <!-- <label>username (email):</label> -->
-    <input #username="ngModel" name="username" [(ngModel)]="userLogin.username" class="form-control" type="email" [pattern]="emailRegEx" placeholder="username@yourEmail.com" required minlength="6" maxlength="30">
+      <h1>Registered?</h1>
+      <mat-form-field class="loginInputs" >
+          <mat-label>Username</mat-label>
+          <input type="email" matInput placeholder="username@yourEmail.com" #username="ngModel" [(ngModel)]="userLogin.username" name="username" required [pattern]="emailRegEx" minlength="6" maxlength="30">
+            <mat-error *ngIf="username.touched && username.errors && username.errors['required']">Missing username</mat-error>
+            <mat-error *ngIf="username.touched && username.errors && (username.errors['minlength'] || username.errors['maxlength'])">username must be between 6-30 characters</mat-error>
+            <mat-error *ngIf="username.touched && username.errors && !(username.errors['minlength'] || username.errors['maxlength']) && (username.errors['pattern'])">Invalid Email Address</mat-error>
+      </mat-form-field>
 
+      <mat-form-field class="loginInputs">
+          <mat-label>Password</mat-label>
+          <input type="password" title="passwordLogin" matInput  #password="ngModel" [(ngModel)]="userLogin.password" name="password" required minlength="8" maxlength="30">
+          <mat-error *ngIf="password.errors && password.touched && password.errors['required']"> Missing password</mat-error>
+          <mat-error *ngIf="password.errors && password.touched && (password.errors['minlength'] || password.errors['maxlength'])"> password must be between 8-30 characters</mat-error>
+        </mat-form-field>
 
-    <!-- <label>password:</label> -->
-    <input #password="ngModel" name="password" [(ngModel)]="userLogin.password" class= "form-control" type="text"  placeholder="password" required minlength="8" maxlength="30">
+        <button mat-raised-button color="primary" [disabled]="loginForm.invalid" class="loginBtn" type="submit" >Login</button>
+      </form><br/>
+      
+    <a class="signLink" [routerLink]="['/', {outlets: {leftBar:['registerA']}}]"><i class="bi bi-person-fill-up"></i> Sign Up</a>
 
+    <div #warningsDiv class="warningsDiv"></div>
+  </div>
 
-    <button [disabled]="loginForm.invalid" class="btn btn-primary" type="submit">Login</button>
-    <a [routerLink]="['/', {outlets: {leftBar:['registerA']}}]">Sign Up</a>
-</form><br/>
-
-
-
-<div class="warningsDiv">
-<span *ngIf="loginWarning" class="bi bi-exclamation-circle-fill"> {{loginWarning}}</span>
-<span *ngIf="username.errors && username.touched">
-  <span class="bi bi-exclamation-circle-fill" *ngIf="username.errors['required']"> Missing username</span>
-  <span class="bi bi-exclamation-circle-fill" *ngIf="username.errors['minlength'] || username.errors['maxlength']"> username must be between 6-30 characters</span>
-  <span class="bi bi-exclamation-circle-fill" *ngIf="username.errors['pattern']"> username must be a valid address, e.g. me@mydomain.com</span>
-</span>
-<span *ngIf="password.errors && password.touched">
-  <span class="bi bi-exclamation-circle-fill" *ngIf="password.errors['required']"> Missing password</span>
-  <span class="bi bi-exclamation-circle-fill" *ngIf="password.errors['minlength'] || password.errors['maxlength']"> password must be between 8-30 characters</span>
-</span>
-</div>
-
-</div>
-
-  <div *ngIf="myUser" class="bounce2 bi bi-arrow-up"></div>
 </div>

@@ -9,7 +9,6 @@ export class Order{
       public orderDate:Date=new Date(),
       public creditCard?:number,
       public payLastDigits?:number,
-      // public isCompleted?:number,
-      public orderId?:number,
+      public orderId?:number
       ){}
 }

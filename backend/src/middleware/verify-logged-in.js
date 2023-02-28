@@ -1,45 +1,26 @@
-const { response } = require("express");
 const jwt= require("jsonwebtoken");
 const config= require("../config.json");
-const expressJwt = require('express-jwt');
-const fs = require('fs');
 
 
-//Some actions are allowed only for users
 
-// function verifyLoggedIn(){
-//     const RSA_PUBLIC_KEY = fs.readFileSync('./demos/public.key');
-
-//     expressJwt({
-//         secret: RSA_PUBLIC_KEY
-//         // algorithms: ["HS256"]
-
-//     })
-// }
+/**
+ * Validate if requst was sent with token as authorization tool.
+ * Validate if token is valid.
+ */
 function verifyLoggedIn(request, response, next){
-    // const notLogMessage={message:"You are not logged in"};
     if(!request.headers.authorization)
-        return response.status(401).send({message: "a"});
-
+        return response.status(401).send({message: "You are not logged-in!"});
         const token= request.headers.authorization?.split(" ")[1];
-        console.log("!token");
-        if(!token) return response.status(401).send({message: "b"});
-
+        if(!token) return response.status(401).send({message: "You are not logged-in!"});
         jwt.verify(token, config.jwtKey, (err, decodedToken)=>{
-            console.log("token11");
-
             if(err){
                 if(err.message=="jwt expired"){
-                    console.log("exp");
-
-                return response.status(403).send({message: "Your login session has expired"});
+                    return response.status(403).send({message: "Your login session has expired"});
                 }
-                return response.status(401).send({message: "c"})
+                    return response.status(401).send({message: "You are not logged-in!"})
             }
             else{
                 request.user= decodedToken.user;
-                console.log("***")
-                console.log(request.user)
                 next();
             }
         })

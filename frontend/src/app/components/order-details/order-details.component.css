@@ -2,31 +2,22 @@
   padding: 20px;;
 }
 
-h2{
-  margin-bottom: 0 !important
+h1{
+  font-family: 'Unbounded', cursive;
+  font-weight: bold;
 }
 
-.bi-exclamation-circle-fill{
-  color: rgb(204, 98, 98);
-  display: block;
-  font-size: 11px;
+h3{
+  margin-top: 10px;
+  font-family: 'Unbounded', cursive;
 }
 
-span{
-  display: block;
+
+button{
+  width: 100%;
+  font-family: 'Unbounded', cursive;
 }
 
-.form-control{
-  width:100%;
-  margin-bottom: 20px;
+.orderInputs{
+  margin-right: 10px;
 }
-
-.datePicker{
-  width:70%;
-  display: inline;
-}
-
-/* .mat-mdc-button-touch-target{
-  padding: 0;
-
-} */

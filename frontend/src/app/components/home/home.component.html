@@ -2,32 +2,17 @@
     <header>
       <app-header></app-header>
     </header>
-    <!-- <app-products></app-products> -->
 
   <main #main>
     <div #leftBar class="leftBar">
-      <button *ngIf="cartProducts && !isMinimize && !isAdmin" title="minimizer" type="button" class="bi bi-box-arrow-up-left minimizer" (click)="minimize()"></button>
+      <button color="primary" *ngIf="cartProducts && !isMinimize && !isAdmin" title="minimizer" type="button" class="bi bi-box-arrow-up-left minimizer" (click)="minimize()"></button>
       <router-outlet name="leftBar"></router-outlet>
     </div>
     <div #mainBar class="mainBar">
-      <button *ngIf="cartProducts && isMinimize" title="maximizer" class="minimizedTab bi bi-arrows-angle-expand" (click)="maximize()"> Your Cart</button>
+      <button mat-raised-button color="primary" type="button" *ngIf="cartProducts && isMinimize" title="maximizer" class="minimizedTab bi bi-arrows-angle-expand" (click)="maximize()">&nbsp;Click Here to see Your Cart</button>
       <router-outlet></router-outlet>
     </div>
 </main>
-
-
-
-    <!-- <main>
-      <div class="leftDiv">
-        <router-outlet name="signBar"></router-outlet>
-      </div>
-      <div class="centerDiv">
-        <app-about></app-about>
-      </div>
-      <div class="rightDiv">
-        <app-info></app-info>
-      </div>
-    </main> -->
 
     <footer>
       <app-footer></app-footer>

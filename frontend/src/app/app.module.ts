@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -12,7 +11,6 @@ import { InfoComponent } from './components/info/info.component';
 import { OrdersService } from './services/orders.service';
 import { ProductsService } from './services/products.service';
 import { UsersService } from './services/users.service';
-import { ConvertDatePipe } from './convert-date.pipe';
 import { AuthInterceptor } from './methods/auth.interceptor';
 import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
@@ -23,7 +21,6 @@ import { MainComponent } from './components/main/main.component';
 import { CartComponent } from './components/cart/cart.component';
 import { ProductsComponent } from './components/products/products.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-// import {  } from '@angular/material';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { PopUpProductComponent } from './components/pop-up-product/pop-up-product.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -41,6 +38,18 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { DatePipe } from '@angular/common';
 import { PopMessageComponent } from './components/pop-message/pop-message.component';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatButtonModule} from '@angular/material/button';
+import {MatSelectModule} from '@angular/material/select';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import { NgxMatFileInputModule } from '@angular-material-components/file-input';
+import {MatIconModule} from '@angular/material/icon';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { FixPricePipe } from './methods/fix-price.pipe';
+
+
 
 
 @NgModule({
@@ -51,7 +60,6 @@ import { PopMessageComponent } from './components/pop-message/pop-message.compon
     LoginComponent,
     AboutComponent,
     InfoComponent,
-    ConvertDatePipe,
     HomeComponent,
     FirstRegisterComponent,
     SecondRegisterComponent,
@@ -64,7 +72,8 @@ import { PopMessageComponent } from './components/pop-message/pop-message.compon
     HighlighterPipe,
     SuccessOrderComponent,
     AdminPanelComponent,
-    PopMessageComponent  ],
+    PopMessageComponent,
+    FixPricePipe  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -77,7 +86,16 @@ import { PopMessageComponent } from './components/pop-message/pop-message.compon
     MatDatepickerModule,
     MatNativeDateModule,
     MatFormFieldModule,
-    MatInputModule
+    MatSnackBarModule,
+    MatInputModule,
+    MatCheckboxModule,
+    MatButtonModule,
+    MatSelectModule,
+    MatTooltipModule,
+    NgxMatFileInputModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
+    MatProgressBarModule
   ],
   providers: [
     OrdersService,
@@ -89,8 +107,8 @@ import { PopMessageComponent } from './components/pop-message/pop-message.compon
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     MatDialog,
     Location,
-    DatePipe
-
+    DatePipe,
+    NgxMatFileInputModule
   ],
   bootstrap: [AppComponent]
 })

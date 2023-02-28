@@ -1,7 +1,6 @@
 main{
    height: 100%;
    width: 100%;
-    /* border: 2px solid rgb(221, 210, 210); */
     display: grid;
     grid-template-rows: repeat(12, 1fr);
     grid-template-columns: repeat(12, 1fr);
@@ -10,6 +9,22 @@ main{
 .centerDiv, .rightDiv{
     grid-column: span 6;
     grid-row: span 12;
-    /* border: 2px solid rgb(221, 210, 210); */
-    padding: 20px;
+    padding: 13px;
+}
+
+
+@media screen and (max-width: 576px){
+  main{
+    height: 150%;
+  }
+  
+  .centerDiv{
+  grid-column: span 12;
+    grid-row: span 6;
+  }
+
+  .rightDiv{
+    grid-column: span 12;
+    grid-row: span 6;
+  }
 }

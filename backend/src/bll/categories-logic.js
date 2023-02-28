@@ -1,29 +1,42 @@
 const dal= require("../dal/dal");
-const jwt= require("jsonwebtoken");
-const config= require("../config.json");
 
 
-async function getCategories(userId){
+/**
+ * Get categories
+ */
+async function getCategories(){
     const result= await dal.executeQueryAsync(`
     SELECT * FROM categories
     `);
-    console.log(result)
     return result;
 }
 
+
+/**
+ * Count number of categories, in order to limit the number of categories.
+ */
+async function countCategories(){
+    const result= await dal.executeQueryAsync(`
+    SELECT COUNT(*) AS amountCat FROM categories
+    `);
+    return result;
+}
+
+/**
+ * Add new category
+ */
 async function postNewCategory(newCategoryName){
     const result= await dal.executeQueryAsync(`
     INSERT INTO categories
     VALUES (DEFAULT, ?)
     `, [newCategoryName]);
-    console.log(result)
     return result;
 }
 
 
-
 module.exports={
     getCategories,
-    postNewCategory
+    postNewCategory,
+    countCategories
 
 }

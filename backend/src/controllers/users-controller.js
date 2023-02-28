@@ -1,44 +1,42 @@
 const express= require("express");
 const router= express.Router();
 const usersLogic= require("../bll/users-logic");
-const verifyLoggedIn = require("../middleware/verify-logged-in");
 const Credentials = require("../models/credentials");
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 
 
-//Login Process
+/**
+ * Validate if Token is valid in order to implement autoLogin
+ */
 router.post("/public/autoLogin", async (request, response)=>{
     try{
-        console.log("token")
-        console.log(request.body)
-
-
         const lastUserToken= request.body.lastUserToken;
         let lastUserData= jwt.decode(lastUserToken);
-        console.log(lastUserData);
         const expiryToken= new Date(0);
         expiryToken.setUTCSeconds(lastUserData.exp);
-            if(expiryToken>new Date()){
+
+            if(expiryToken>new Date())
                 response.send(lastUserData.user)
-            }else{
+            else
                 response.send({message: "Invalid Token"})
-            }
         }
     catch(err){
         console.log(err);
         response.status(500).send({message: "No Data Available. Server Error"})
-    }
-})
+    }})
 
+
+/**
+ * Login Process. includes validating user credentials.
+ */
 router.post("/public/login", async (request, response)=>{
     try{
         const credentials= new Credentials(request.body);
         const errors= credentials.validate();
-        if(errors) return response.status(400).send({message: errors});
-
+        if(errors) 
+            return response.status(400).send({message: errors});
         const loggedInUser= await usersLogic.postLoginUser(credentials);
-        console.log(loggedInUser)
         loggedInUser
             ?response.send(loggedInUser)
             :response.status(404).send({message: `Incorrect username or password. Try again.`})
@@ -49,58 +47,61 @@ router.post("/public/login", async (request, response)=>{
     }
 })
 
-
+/**
+ * Validating if user ID already exist during Registration.
+ */
 router.get("/public/idValidation/:id", async (request, response)=>{
     try{
         const userId= request.params.id;
-        console.log(userId)
         let isIdExist= await usersLogic.isIdExist(userId);
-        // if(isIdExist){
-            response.send(isIdExist)
-        // }else{
-        //     response.send(null)
-        // }
+        response.send(isIdExist)
     }
     catch(err){
         console.log(err);
-        response.status(500).send(err);
-
+        response.status(500).send({message: "No Data Available. Server Error"});
     }
 })
 
+/**
+ * Validating if username already exist during Registration form.
+ */
 router.get("/public/usernameValidation/:username", async (request, response)=>{
     try{
         const username= request.params.username;
         let isUsernameExist= await usersLogic.getAlreadyRegister(username);
-        console.log(isUsernameExist)
-        if(isUsernameExist){
+        if(isUsernameExist)
             response.send(isUsernameExist)
-        }else{
+        else
             response.send(null)
-        }
     }
     catch(err){
         console.log(err);
-        response.status(500).send(err);
+        response.status(500).send({message: "No Data Available. Server Error"});
 
     }
 })
 
+/**
+ * Registration process. includes validation.
+ */
 router.post("/public/register", async (request, response)=>{
     try{
         const newUser= new User(request.body);
+        const error= newUser.validate();
+        if(error)
+            response.status(400).send({message:error})
+        else{
         let isExist= await newUser.validateDouble();
         if (isExist){
             response.status(400).send(isExist);
         }
         else{
             const result= await usersLogic.postNewUser(newUser);
-            response.send(result);
-        }
-    }
+            response.status(201).send(result);
+        }}}
     catch(err){
         console.log(err);
-        response.status(500).send(err);
+        response.status(500).send({message: "Server Error"});
 
     }
 })

@@ -1,18 +1,10 @@
-import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
-import User from 'src/app/models/user';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
-// import jsPDF from 'jspdf';
-import autoTable from 'jspdf-autotable'
-// import jsPDFInvoiceTemplate from "jspdf-invoice-template";
-import jsPDFInvoiceTemplate, { OutputType, jsPDF } from "jspdf-invoice-template";
-
-import { ProductsService } from 'src/app/services/products.service';
-import { itemsService } from 'src/app/services/items.service';
-import { Item } from 'src/app/models/item';
+import { Component, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import jsPDFInvoiceTemplate,   { OutputType } from "jspdf-invoice-template";
+import { jsPDF } from 'jspdf-invoice-template';
 import { CartsService } from 'src/app/services/carts.service';
 import { UsersService } from 'src/app/services/users.service';
 import { OrdersService } from 'src/app/services/orders.service';
-import { Order } from 'src/app/models/order';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
 
@@ -32,16 +24,19 @@ export class SuccessOrderComponent{
     private datePipe: DatePipe,
     private router: Router
     ){}
+    
+    progBar=false;
+    index=1;
 
-    index=1
+    //Reciept Settings
+
     itemsData= this.cartsService.cartContent.map((item:any)=>[
-                this.index++,
+      this.index++,
                 `${item.productName}                                        `,
                 item.price,
                 item.quantity,
                 item.totalPerProduct
               ])
-
 
     props = {
       outputType: OutputType.Save,
@@ -51,38 +46,39 @@ export class SuccessOrderComponent{
       compress: true,
       logo: {
           src: "../../../assets/superMarioLogo.png",
-          type: 'PNG', //optional, when src= data:uri (nodejs case)
-          width: 30, //aspect ratio = width/height
+          type: 'PNG', 
+          width: 30, 
           height: 26.66,
           margin: {
-              top: 0, //negative or positive num, from the current position
-              left: 0 //negative or positive num, from the current position
+              top: 0, 
+              left: 0 
           }
       },
       stamp: {
-          inAllPages: true, //by default = false, just in the last page
+          inAllPages: true, 
           src: "https://raw.githubusercontent.com/edisonneza/jspdf-invoice-template/demo/images/qr_code.jpg",
-          type: 'JPG', //optional, when src= data:uri (nodejs case)
-          width: 20, //aspect ratio = width/height
+          type: 'JPG', 
+          width: 20, 
           height: 20,
           margin: {
-              top: 0, //negative or positive num, from the current position
-              left: 0 //negative or positive num, from the current position
+              top: 0, 
+              left: 0 
           }
       },
       business: {
           name: "Super Mario",
-          address: "Jaffa St, Jerusalem",
-          phone: "053-7389200",
+          address: "Agudat Sport HapPo'el 2, Jerusalem",
+          phone: "1800-56-56-56",
           email: "superMario@gmail.com",
-          email_1: "www.superMario.com",
+          email_1: "www.supermario.com",
           website: ''
       },
       contact: {
           label: "For:",
           name: `${this.userService.myUser.firstName} ${this.userService.myUser.lastName}`,
           address: `${this.userService.myUser.city}, ${this.userService.myUser.street}`,
-          phone: `${this.userService.myUser.username}`,
+          phone: `${this.userService.myUser.username}`
+
       },
       invoice: {
           label: "Cart #: ",
@@ -120,14 +116,25 @@ export class SuccessOrderComponent{
   };
 
 
+/**
+ * Download receipt when user click on the link
+ * Display progress bar for 3 seconds.
+ */
   downloadReceipt(){
     jsPDFInvoiceTemplate(this.props)
+    this.progBar=true;
+    setTimeout(() => {
+      this.progBar=false
+    }, 3000);
    }
 
+
+   /**
+    * Reload app back to home page
+    */
    goHome(){
-    // this.router.navigate([{outlets:{primary: ['main'], leftBar: ['login']}}], {state:{isJustFinishedShop: true}});
     location.reload()
-
    }
+
 }
 

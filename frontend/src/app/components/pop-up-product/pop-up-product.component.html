@@ -1,6 +1,10 @@
 <div class="popUp">
-<h1>Add <span>{{myProduct}}</span> To Cart</h1>
-<label>units:  </label>
+<h1>Add <span>{{myProduct| uppercase}}</span> To Cart</h1>
+<label>Units:  </label>
 <input #unitsInput="ngModel" [(ngModel)]="units" title='unitsInput' type="number" class="form-control" min="0" max="10">
-<button mat-button [mat-dialog-close] type="button" class="btn btn-primary" (click)="addToCart()">Add</button>
+<div>
+  <button #addBtn class="popBtn" mat-raised-button color="accent" [mat-dialog-close] type="button" (click)="addToCart()" [disabled]="!units || units>10 || units<0">Add</button>
+  <button class="popBtn" mat-raised-button color="warn" [mat-dialog-close] type="button">Cancel</button>
+</div>
+
 </div>

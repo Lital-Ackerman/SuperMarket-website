@@ -1,19 +1,55 @@
-
-
 .role{
     font-size: 15px;
 }
 
 .input-group{
-  width: 250px;
+  width: 100%;
+  margin-left: 5%;
 }
 
-.contactLink{
-  float: right;
+li{
+  font-family: 'Unbounded', cursive;
+}
+
+.search-hover {
+  border: 1px solid #ccc;
+  outline: none;
+  border-radius: 10px;
+  width: 30%;
+  padding: 5px;
+  transition: all 0.5s;
+}
+
+.search-hover:hover {
+  width: 60%;
+  padding-left: 15px;
+}
+
+
+.btn-secondary{
+  border-radius: 0 10px 10px 0;
+}
+
+.helloUser{
+  font-family: 'Carter One', cursive;
+}
+
+.logoText{
+  font-family: 'Carter One', cursive;
+  margin-left: 5px;
+}
+
+.input-group{
+  font-family: 'Sriracha', cursive;
 
 }
 
-/* .helloUser{
-    position: absolute;
-    right: 0px
-} */
+@media screen and (max-width: 576px){
+  .input-group{
+    width: 90%;
+  }
+
+  .search-hover, .search-hover:hover{
+    width: 80%;
+  }
+}

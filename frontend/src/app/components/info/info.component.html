@@ -1,9 +1,17 @@
 <div class="infoDiv">
     <div class="imageInfo">
-        <img src="../../../../assets/Supermarket.png" alt="marioLogo">
-    
+        <img src="../../../../assets/veg.jpg" alt="vegImg">
     </div>
-    <div class="ordersInfo">{{orderInfo}}</div>
-    <div class="productsInfo">{{productsInfo}}</div>
-    <div class="dinamnicMessage">{{orderStatus}}</div>
+    <div class="ordersInfo">
+      <i class="bi bi-truck"></i>
+      {{orderInfo}}
+    </div>
+    <div class="productsInfo">
+      <i class="bi bi-shop-window"></i>
+      {{productsInfo}}
+    </div>
+    <div *ngIf="orderStatus" #dinamnicMessage class="dinamnicMessage">
+      <i class="bi bi-bag-check"></i>
+      {{orderStatus}}
+    </div>
 </div>

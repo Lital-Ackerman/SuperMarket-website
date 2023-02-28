@@ -1,5 +1,14 @@
 const bll= require("../bll/users-logic");
+const Joi= require("joi");
 
+const patterns= {
+    email: /^([a-z\d\.-]+)@([a-z\d-]+)\.([a-z]{2,8})(\.[a-z]{2,8})?$/,
+    userId: /^\d{9}$/,
+    password: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+  }
+
+const regexUser= new RegExp(patterns.email)
+const regexPass= new RegExp(patterns.password)
 
 class User{
     constructor(user){
@@ -18,29 +27,25 @@ class User{
         if (isExist.length>0)
         return "Username is already exist";
         else return null
-    
     }
 
-    
-    // validateCredentials(){
-    //     const errors={};
-    //     if(this.firstName && this.firstName.length<2)
-    //     errors.firstName= "first Name should be >2";
+    static #validateSchema= Joi.object({
+        firstName: Joi.string().required().min(2).max(20),
+        lastName: Joi.string().required().min(2).max(20),
+        userId: Joi.number().required(),
+        username: Joi.string().min(6).max(30).required().custom((value, helper)=>{
+            if(!regexUser.test(value)) return helper.message('Invalid Email address')}),
+        password: Joi.string().min(8).max(30).required().custom((value, helper)=>{
+            if(!regexPass.test(value)) return helper.message('Invalid Password')}),
+        city: Joi.string().required().min(2).max(20),
+        street: Joi.string().required().min(2).max(20),
+        role: Joi.number().integer().allow()
+    })
 
-    //     if(this.lastName && this.lastName.length<2)
-    //     errors.lastName= "last Name should be >2";
-
-    //     if(this.userName && this.userName.length<4)
-    //     errors.userName= "UserName should be >3";
-
-    //     if(this.password && this.password.length<6)
-    //     errors.password= "Password Should be >5!";
-
-    //     const errorsLength= Object.keys(errors).length
-    //     if(errorsLength<=0) return null
-    //     else return errors;
-    // }
-    
+    validate(){
+        const result= User.#validateSchema.validate(this, {abortEarly: false});
+        return result.error ? result.error.details.map(err => err.message) : null;
+    }
 }
 
 module.exports= User;

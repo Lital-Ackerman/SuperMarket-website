@@ -12,23 +12,31 @@ BASE_URL= environment.ordersBaseUrl
   constructor(private http:HttpClient) { }
   myOrder:Order;
 
-  getAmountOfOrders(): Observable<any>{
-    return this.http.get<any>(`${this.BASE_URL}/public/ordersAmount`);
+
+  /**
+   *Get amount of orders
+   * @returns object with the relvant number
+   */
+  getAmountOfOrders(): Observable<object>{
+    return this.http.get<object>(`${this.BASE_URL}/public/ordersAmount`);
   }
 
+
+  /**
+   *Open new Order after user filled all details.
+   * @param orderInfo
+   * @returns {Order} order details
+   */
   openNewOrder(orderInfo:Order): Observable<Order>{
     return this.http.post<Order>(`${this.BASE_URL}/newOrder`, orderInfo);
   }
 
-  // validateShipDate(): Observable<any>{
-  //   return this.http.get<any>(`${this.BASE_URL}/validateShipDate/${shipDate}`);
-  // }
 
+/**
+ *Get days that have 3 orders or more.
+ * @returns array with dates
+ */
   busyDates(): Observable<any[]>{
     return this.http.get<any[]>(`${this.BASE_URL}/busyDates`);
   }
-
-
-
-
 }

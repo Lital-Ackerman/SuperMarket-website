@@ -23,7 +23,7 @@ server.use("/api/categories", categoriesController);
 server.use("/api/carts", cartsController);
 server.use("/api/items", itemsController);
 
-// Handle not valid route
+// Handle invalid route
 server.use("*", (request, response) => {
   response.status(404).json({message: `Route not found ${request.originalUrl}`})
 });

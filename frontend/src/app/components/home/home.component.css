@@ -1,30 +1,25 @@
 section{
     height: 100%;
     background-color: whitesmoke;
+    background-image: url("../../../assets/webBack.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat ;
+    background-attachment: fixed;
     box-sizing: border-box;
     display: grid;
     grid-template-rows: repeat(12, 1fr);
     grid-template-columns: repeat(12, 1fr);
 }
 
-
-
 header{
     grid-row: span 1;
     grid-column: span 12;
-    /* border: 2px solid; */
 }
-
-/* aside{
-    grid-column: span 2;
-    grid-row: span 10;
-    border: 2px solid;
-} */
 
 main{
     grid-column: span 12;
     grid-row: span 11;
-    /* border: 2px solid; */
     display: grid;
     grid-template-rows: repeat(12, 1fr);
     grid-template-columns: repeat(12, 1fr);
@@ -33,39 +28,52 @@ main{
 .leftBar{
     grid-column: span 4;
     grid-row: span 12;
-    /* border: 2px solid; */
-    /* padding: 20px; */
-    border: 2px solid rgb(221, 210, 210);
-
+    border-right: 2px solid rgb(221, 210, 210);
+    overflow-y: auto;
 }
 
 .mainBar{
     grid-column: span 8;
     grid-row: span 12;
-    /* border: 2px solid; */
-    /* padding: 20px; */
+    overflow-y: auto;
 }
 
 footer{
     grid-column: span 12;
     grid-row: span 0.5;
-    /* border: 2px solid; */
 }
 
 .leftBar .minimizer{
-color: red;
+color: rgb(116, 51, 146);
 border: none;
 font-size: 1.5em;
 font-weight: bold;
+display: inline;
 }
 
 .minimizedTab{
-  width:150px;
+  width:100%;
   height: 30px;
-  color: whitesmoke;
-  background-color: rgb(148, 148, 188);
   border-radius: 5px;
   font-weight: bold;
-
+  text-align: center;
 }
 
+@media screen and (max-width: 576px){
+  main{
+    grid-column: span 12;
+    grid-row: span 11;
+    display: grid;
+    grid-template-rows: repeat(24, 1fr);
+    grid-template-columns: repeat(12, 1fr);
+}
+  .mainBar{
+    grid-column: span 12;
+    grid-row: span 13;
+  }
+  .leftBar {
+    grid-column: span 12;
+    grid-row: span 10;
+    overflow-y: none;
+  }
+}

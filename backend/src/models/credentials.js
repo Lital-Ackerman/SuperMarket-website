@@ -1,7 +1,6 @@
 const Joi = require("joi");
 
 class Credentials {
-
     constructor(credentials) {
         this.username = credentials.username;
         this.password = credentials.password;

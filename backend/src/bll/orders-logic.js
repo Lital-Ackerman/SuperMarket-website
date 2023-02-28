@@ -1,16 +1,18 @@
 const dal= require("../dal/dal");
 
 
-
+/**
+ * Get amount of orders.
+ */
 async function getAmountOfOrders(){
  return await dal.executeQueryAsync(`
     SELECT COUNT(*) AS quantity FROM orders 
  `)
- //    WHERE isCompleted=1
-
 }
 
-//user last order
+/**
+ * Get information about last order.
+ */
 async function getLastOrder(userId){
     const result= await dal.executeQueryAsync(`
     SELECT * FROM orders
@@ -19,30 +21,27 @@ async function getLastOrder(userId){
     `, [userId]);
     return result;
 
-    //    AND isCompleted=1
 
 }
 
-//post new order
+/**
+ * Post new order details. Includes saving 4 last digits of credit card.
+ */
 async function postNewOrder(newOrder){
-    console.log(newOrder)
+    newOrder.payLastDigits= +(newOrder.creditCard.toString().substr(-4));
+    delete newOrder.creditCard;
     const result= await dal.executeQueryAsync(`
     INSERT INTO orders
     VALUES (DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?)
     `, [newOrder.userId, newOrder.cartId, newOrder.orderSum, newOrder.shipCity, 
-        newOrder.shipStreet, newOrder.shipDate, newOrder.orderDate, newOrder.payLastDigits]);
+        newOrder.shipStreet, new Date(newOrder.shipDate), new Date(newOrder.orderDate), newOrder.payLastDigits]);
     return result;
 }
 
-// async function validateShipDate(shipDate){
-//     console.log(shipDate)
-//     const result= await dal.executeQueryAsync(`
-//     SELECT * FROM orders
-//     WHERE shipDate='${shipDate}'
-//     `, []);
-//     return result;
-// }
 
+/**
+ * Get days that has 3 or more orders.
+ */
 async function getBusyDates(){
     const result= await dal.executeQueryAsync(`
         SELECT shipDate FROM orders 
@@ -52,10 +51,10 @@ async function getBusyDates(){
     return result;
 }
 
+
 module.exports={
     getAmountOfOrders,
     getLastOrder,
     postNewOrder,
     getBusyDates
-    // validateShipDate
 }

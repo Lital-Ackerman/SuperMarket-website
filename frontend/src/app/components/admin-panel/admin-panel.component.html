@@ -1,56 +1,65 @@
-<div *ngIf="mode=='menu'">
-  <button class="bi bi-plus-circle-fill btn btn-primary" type="button" (click)="addMode()"> Add New Product</button>
-  <h4>for editing: Choose the requested product</h4>
-</div>
 
+<button *ngIf="mode!='add'" [class]="mode=='edit'?'shortBtn':'addBtn'" mat-stroked-button color="warn" type="button" (click)="addMode()"><i class="bi bi-plus-circle-fill"></i> {{addBtnText}}</button>
+<h4 *ngIf="mode=='menu'">For Editing <i class="bi bi-pencil"></i><br/> Click the Requested Product</h4>
 
 
 <form (ngSubmit)="handleProduct()" #adminForm="ngForm" *ngIf="mode!='menu'">
-  <button *ngIf="mode=='edit'" title="btnNew" class="bi bi-plus-circle-fill btn btn-primary" type="button" (click)="addMode()"> Add New Product</button>
   <h1 *ngIf="mode=='add'">Add New Product</h1>
   <h1 *ngIf="mode=='edit'">Edit Product</h1>
   <hr>
-  <!-- <label>Product Name</label> -->
-  <input #productName="ngModel" class="form-control" name="productName" [(ngModel)]="myProduct.productName" type="text" placeholder="Product Name" required minlength="2" maxlength="20">
-  <span *ngIf="productName.errors && productName.touched">
-    <span class="bi bi-exclamation-circle-fill" *ngIf="productName.errors['required']"> Missing ProductName</span>
-    <span class="bi bi-exclamation-circle-fill" *ngIf="productName.errors['minlength'] || productName.errors['maxlength']"> Product Name must be between 2-20 characters</span>
-  </span>
+  <h5 *ngIf="mode=='edit'">*Click SAVE to save changes.</h5>
 
-  <div *ngIf="mode=='edit'">
-    <!-- <label>Product ID</label> -->
-    <input disabled  class="form-control" name="productId" [(ngModel)]="myProduct.productId" placeholder="Product ID">
+  <div class="form-floating mb-3">
+      <input #productName="ngModel" class="form-control" name="productName" id="productName" [(ngModel)]="myProduct.productName" type="text" placeholder="Product Name" title="Product Name" required minlength="2" maxlength="12">
+      <label for="productName">Product Name</label>
+      <span *ngIf="productName.errors && productName.touched">
+        <span class="bi bi-exclamation-circle-fill" *ngIf="productName.errors['required']"> Missing ProductName</span>
+        <span class="bi bi-exclamation-circle-fill" *ngIf="productName.errors['minlength'] || productName.errors['maxlength']"> Product Name must be between 2-12 characters</span>
+      </span>
+      <span class="bi bi-exclamation-circle-fill" *ngIf="nameExist"> Product Name is Already Exist</span>
   </div>
-  <!-- <label>Price</label> -->
-  <input #productPrice="ngModel" class="form-control" name="price" [(ngModel)]="myProduct.price" type="number" placeholder="Price" required min="1" max="10000">
-  <span *ngIf="productPrice.errors && productPrice.touched">
-    <span class="bi bi-exclamation-circle-fill" *ngIf="productPrice.errors['required']"> Missing Product Price</span>
-    <span class="bi bi-exclamation-circle-fill" *ngIf="productPrice.errors['min'] || productPrice.errors['max']"> Product Price must be between 1-1000 NIS</span>
-  </span>
-  <!-- <label>Image</label> -->
-  <input #image class="form-control" name="image" accept="images/*"  title="imageSelect" type="file" required (change)="saveImage($event)" (blur)="isImageVisited()">
-  <span class="bi bi-exclamation-circle-fill" *ngIf="imageVisited && !myProduct.imageFile">Missing image</span>
+
+  <div *ngIf="mode=='edit'" class="form-floating">
+    <input disabled  class="form-control" name="productId" id="productId" [(ngModel)]="myProduct.productId" placeholder="Product ID">
+    <label for="productId">Product ID</label>
+  </div>
 
 
-  <!-- <label>Category</label> -->
-    <br/>
-    <label class="form-check-label">new Category?</label><input (click)="ChangeCategoryInput()" #newCategoryCheck class="form-check-input" title="newCategory" type="checkbox">
-    <div *ngIf="newCategory">
-    <input #cityInput="ngModel" class="form-control" name="categoryId" type="text" [(ngModel)]="myProduct.categoryName" placeholder="Category" required minlength="2" maxlength="10">
+  <div class="form-floating">
+    <input #productPrice="ngModel" class="form-control" id="productPrice" title="Product Price" name="price" [(ngModel)]="myProduct.price" placeholder="Price" type="number" required min="1" max="1000">
+    <label for="productPrice">Price</label>
+    <span *ngIf="productPrice.errors && productPrice.touched">
+      <span class="bi bi-exclamation-circle-fill" *ngIf="productPrice.errors['required']"> Missing Product Price</span>
+      <span class="bi bi-exclamation-circle-fill" *ngIf="productPrice.errors['min'] || productPrice.errors['max']"> Price must be between 1-1000 NIS</span>
+    </span>
+ </div>
+
+  <div class="form-floating">
+    <input #image class="form-control imageTag" name="image" id="imageFile" accept="images/*"  title="image Select" type="file" required (change)="saveImage($event)" (blur)="isImageVisited()">
+    <span class="bi bi-exclamation-circle-fill" *ngIf="imageVisited && !myProduct.imageFile"> Missing image</span>
+  </div>
+
+
+  <mat-checkbox class="checkCategory" (click)="ChangeCategoryInput()" #newCategoryCheck>New Category?</mat-checkbox>
+  <div *ngIf="newCategory" class="form-floating">
+    <input #cityInput="ngModel" class="form-control" id="newCategory" name="categoryId" type="text" [(ngModel)]="myProduct.categoryName" placeholder="Category" required minlength="2" maxlength="10">
+    <label for="newCategory">New Category</label>
     <span *ngIf="cityInput.errors && cityInput.touched">
       <span class="bi bi-exclamation-circle-fill" *ngIf="cityInput.errors['required']"> Missing Category</span>
-      <span class="bi bi-exclamation-circle-fill" *ngIf="cityInput.errors['minlength'] || cityInput.errors['maxlength']"> Category Name must be between 2-20 characters</span>
-  </span>
+      <span class="bi bi-exclamation-circle-fill" *ngIf="cityInput.errors['minlength'] || cityInput.errors['maxlength']"> Category Name must be between 2-10 characters</span>
+    </span>
   </div>
-<div *ngIf="!newCategory">
-  <select #citySelect="ngModel"  title="selectCategory" name="categoryName" [(ngModel)]="myProduct.categoryId"  class="form-select" required>
-    <option value="">Select Category:</option>
-    <option *ngFor="let c of categories" [value]="c.categoryId">{{c.categoryName}}</option>
-  </select>
-  <span *ngIf="citySelect.errors && citySelect.touched">
-    <span class="bi bi-exclamation-circle-fill" *ngIf="citySelect.errors['required']"> Missing Category</span>
-</span>
-</div>
-  <button class="btn btn-primary" [disabled]="adminForm.invalid || !myProduct.imageFile" type="submit">Save</button>
+
+
+  <div *ngIf="!newCategory" class="form-floating">
+    <select #citySelect="ngModel" id="selectCategory"  title="select Category" name="categoryName" [(ngModel)]="myProduct.categoryId"  class="form-select" required>
+      <option *ngFor="let c of categories" [value]="c.categoryId">{{c.categoryName}}</option>
+    </select>
+    <label for="selectCategory">Select Category</label>
+    <span *ngIf="citySelect.errors && citySelect.touched">
+      <span class="bi bi-exclamation-circle-fill" *ngIf="citySelect.errors['required']"> Missing Category</span>
+    </span>
+  </div>
+
+<button mat-raised-button color="warn" class="saveBtn" [disabled]="adminForm.invalid || !myProduct.imageFile" type="submit">Save</button>
 </form>
-<div>{{infoMessage}}</div>

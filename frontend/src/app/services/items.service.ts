@@ -11,16 +11,19 @@ import { UsersService } from './users.service';
   providedIn: 'root'
 })
 export class itemsService {
-
 constructor(
 private http:HttpClient,
-private usersService: UsersService,
 private cartsService: CartsService) { }
 
 BASE_URL= environment.itemsBaseUrl;
 cartContent:any;
 itemsEmitter= new EventEmitter<any>();
 
+
+/**
+ * Add new item to cart.
+ * Emits event in the cart component in order to refresh the items display.
+ */
 postItemToCart(itemInfo:Item): Observable<Item>{
   return this.http.post<Item>(`${this.BASE_URL}/postItem`, itemInfo)
    .pipe(tap(()=>{
@@ -28,7 +31,13 @@ postItemToCart(itemInfo:Item): Observable<Item>{
    }))
 }
 
-deleteItems(deleteThis:Item | string): Observable<any>{
+
+/**
+ *Delete item/s from cart.
+ * @param deleteThis param can be string "all" or itemId
+ * @returns result of request
+ */
+deleteItems(deleteThis:number | string): Observable<any>{
   return this.http.delete<any>(`${this.BASE_URL}/deleteItems/${this.cartsService.cartId}/${deleteThis}`)
   .pipe(tap(()=>{
     this.itemsEmitter.emit()

@@ -1,16 +1,54 @@
-<nav class="navbar navbar-expand-sm navbar-light bg-light">
+<div class="productsDiv">
+
+<nav class="navbar navbar-expand-sm navbar-light bg-light" *ngIf="!smallScreen">
   <div class="container-fluid">
-  <ul  class="navbar-nav mr-auto">
-    <li *ngFor="let c of categories" class="nav-item"><a class="nav-link"><button [id]="c.categoryId" class="activeCategory" (click)="showProducts(c.categoryId)">{{c.categoryName}}</button></a></li>
+  <ul  class="navbar-nav mr-auto justify-content-between w-100">
+    <li *ngFor="let c of categories" class="nav-item"><a [class.selected]="c.categoryId==selectedCategory" class="nav-link active" role="button"  [id]="c.categoryId"  (click)="showProducts(c.categoryId)">{{c.categoryName}}</a></li>
   </ul>
 </div>
 </nav>
 
-<h2 *ngIf="products.length==0">{{productsMessage}}</h2>
-<div class="cardsContainer" *ngIf="products.length>0">
-  <div class="card" *ngFor="let p of products" (click)="selectProduct(p)">
-    <img [src]="imageUrl + p.image" alt="productImage">
-    <div class= "card-title">{{p.productName}}</div>
-    <div class= "card-body">{{p.price}}</div>
+<div *ngIf="smallScreen" class="form-floating">
+  <select #selectCat (change)="showProducts(selectCat.value)" title="Select Category" class="form-select">
+    <option *ngFor=" let c of categories" [value]="c.categoryId">{{c.categoryName}}</option>
+  </select>
+  <label for="selectCategory">Select Category</label>
+</div>
+
+<h2 *ngIf="products.length==0">&nbsp; {{productsMessage}}</h2>
+
+  <div class="container-xl">
+    <div class="row">
+      <div class="col-md-12">
+        <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="0">
+
+        <div class="carousel-inner">
+          <div class="item carousel-item active">
+            <div class="row">
+              <div class="col-sm-4 productCard" *ngFor="let p of products">
+                <div class="thumb-wrapper">
+                  <span *ngIf="!isAdmin"  class="wish-icon"><i title="Like" (click)="toggleIcon(p.productName)" [class]="fillIcon.includes(p.productName) ?'fa fa-heart':'fa fa-heart-o'"></i></span>
+                  <div class="img-box">
+                    <img [src]="imageUrl + p.image" class="img-fluid" alt="">
+                  </div>
+                  <div class="thumb-content">
+                    <h4>{{p.productName}}</h4>
+                    <div class="star-rating">
+                      <ul class="list-inline">
+                        <li class="list-inline-item"><i class="fa fa-star"></i></li>
+                        <li class="list-inline-item"><i class="fa fa-star"></i></li>
+                        <li class="list-inline-item"><i class="fa fa-star"></i></li>
+                      </ul>
+                    </div>
+                    <p class="item-price"><span >{{(p.price*1.05).toFixed(2)}}</span>&nbsp; <b>{{p.price.toFixed(2)}} NIS</b></p>
+                    <a  *ngIf="isAdmin" class="btn btn-primary" (click)="selectProduct(p)">Edit</a>
+                    <a  *ngIf="!isAdmin" class="btn btn-primary" (click)="selectProduct(p)">Add to Cart</a>
+                  </div>
+                </div>
+              </div>
+      </div>
+      </div>
+    </div>
   </div>
 </div>
+

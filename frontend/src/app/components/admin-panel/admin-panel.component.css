@@ -1,6 +1,5 @@
 section{
   height: 100%;
-
 }
 
 .bi-exclamation-circle-fill{
@@ -9,7 +8,61 @@ section{
   font-size: 11px;
 }
 
-.form-control{
-  width:100%;
-  margin-bottom: 20px;
+button{
+  width: 100%;
+  font-family: 'Unbounded', cursive;
 }
+
+h1, h5{
+  text-align: center;
+  font-family: 'Sriracha', cursive;
+  color: rgb(233, 123, 93);
+}
+
+hr{
+  margin-bottom: 10px;
+}
+
+.adminInputs{
+  width: 90%;
+}
+
+h4{
+  font-family: 'Unbounded', cursive;
+  border: 1px solid;
+  border-radius: 10px;
+  padding: 20px;
+  border: 1px solid rgb(221, 210, 210);
+  margin-top: 10px;
+}
+
+.shortBtn{
+  width: -moz-fit-content;
+  width: fit-content;
+  font-size: larger;
+ float: right;
+ border: transparent;
+}
+
+.addBtn{
+  width: 100%;
+  font-family: 'Unbounded', cursive;
+}
+
+.form-control {
+  background-color: transparent;
+  margin-top: 10px;
+}
+
+.form-select{
+  background-color: transparent;
+}
+
+.saveBtn{
+  margin-top: 10px;
+}
+
+label, .imageTag{
+  font-family: 'Handlee', cursive !important;
+}
+
