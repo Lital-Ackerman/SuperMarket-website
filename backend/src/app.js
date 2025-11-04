@@ -25,7 +25,7 @@ server.use("/api/items", itemsController);
 
 // Handle invalid route
 server.use("*", (request, response) => {
-  response.status(404).json({message: `Route not found ${request.originalUrl}`})
+  response.status(404).json({message: `Route not found ${request.originalUrl} Lital`})
 });
 
 
