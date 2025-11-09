@@ -1,18 +1,12 @@
 const db = require("mysql");
 
+
 const pool = db.createPool({
-    host: "mysql-supermario-supermario.i.aivencloud.com",
-    user: "avnadmin",
-    port: 24875,
+    host: "localhost",
+    user: "root",
+    port: 3306,
     database: "supermarketdb"
 });
-
-// const pool = db.createPool({
-//     host: "localhost",
-//     user: "root",
-//     port: 3306,
-//     database: "supermarketdb"
-// });
 
 
 /**
