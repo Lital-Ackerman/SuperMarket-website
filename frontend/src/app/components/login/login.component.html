@@ -18,7 +18,17 @@
 
       <mat-form-field class="loginInputs">
           <mat-label>Password</mat-label>
-          <input type="password" title="passwordLogin" matInput  #password="ngModel" [(ngModel)]="userLogin.password" name="password" required minlength="8" maxlength="30">
+          <input [type]="showPassword ? 'text' : 'password'" title="passwordLogin" matInput  #password="ngModel" [(ngModel)]="userLogin.password" name="password" required minlength="8" maxlength="30">
+          <button
+              mat-icon-button
+              matSuffix
+              type="button"
+              (click)="togglePassword()"
+              (mousedown)="$event.preventDefault()" 
+              [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'"
+              [attr.title]="showPassword ? 'Hide password' : 'Show password'"
+            ><mat-icon>{{ showPassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
           <mat-error *ngIf="password.errors && password.touched && password.errors['required']"> Missing password</mat-error>
           <mat-error *ngIf="password.errors && password.touched && (password.errors['minlength'] || password.errors['maxlength'])"> password must be between 8-30 characters</mat-error>
         </mat-form-field>

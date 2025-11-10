@@ -1,15 +1,17 @@
 //Different parameters that I use in the components and services
 
 
-const PORT= 5000;
+const LOCAL= 'http://localhost:5000';
+const HOST= 'https://supermarket-website.onrender.com';
+export const currentHost = LOCAL;
 
 export const environment = {
-    ordersBaseUrl:`http://localhost:${PORT}/api/orders`,
-    productsBaseUrl: `http://localhost:${PORT}/api/products`,
-    usersBaseUrl: `http://localhost:${PORT}/api/users`,
-    categoriesBaseUrl: `http://localhost:${PORT}/api/categories`,
-    cartsBaseUrl: `http://localhost:${PORT}/api/carts`,
-    itemsBaseUrl: `http://localhost:${PORT}/api/items`,
+    ordersBaseUrl:`${currentHost}/api/orders`,
+    productsBaseUrl: `${currentHost}/api/products`,
+    usersBaseUrl: `${currentHost}/api/users`,
+    categoriesBaseUrl: `${currentHost}/api/categories`,
+    cartsBaseUrl: `${currentHost}/api/carts`,
+    itemsBaseUrl: `${currentHost}/api/items`,
     cities: ["Tel-Aviv", "Jerusalem", "Haifa", "Eilat", "Beer-Sheva", "Rishon-LeTzion", "Petah-Tiqwa", "Ashdod", "Netanya", "Bnei-Brak"],
     patterns:{
       email: /^([a-z\d\.-]+)@([a-z\d-]+)\.([a-z]{2,8})(\.[a-z]{2,8})?$/,

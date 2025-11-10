@@ -8,6 +8,7 @@ import {PopUpProductComponent } from 'src/app/components/pop-up-product/pop-up-p
 import { CartsService } from 'src/app/services/carts.service';
 import { UsersService } from 'src/app/services/users.service';
 import { GlobalService } from 'src/app/services/global.service';
+import {currentHost} from 'src/environment/environment'
 
 @Component({
   selector: 'app-products',
@@ -22,7 +23,7 @@ export class ProductsComponent implements OnInit {
   selectedCategory:number|string;
   categories:Category[];
   products:Product[]=[];
-  imageUrl= "http://localhost:5000/api/products/images/"
+  imageUrl= `${currentHost}/api/products/images/`
   productsMessage:string=" Choose category to find your product..."
   clickMe:boolean=false;
   fillIcon:string[]=this.productsService.likesArray;

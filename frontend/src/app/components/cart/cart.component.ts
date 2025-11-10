@@ -59,7 +59,7 @@ getContent(){
     next:(value:any)=>{
       this.myCartContent= value;
       this.total=0;
-      this.myCartContent.forEach((item:Item)=>{this.total+=item.totalPerProduct });
+      this.myCartContent.forEach((item:Item)=>{this.total+= Number(item.totalPerProduct) });
       this.cartsService.cartTotal= this.total;
     },
     error:(err:any)=>{

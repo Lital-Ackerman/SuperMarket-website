@@ -40,7 +40,7 @@
                         <li class="list-inline-item"><i class="fa fa-star"></i></li>
                       </ul>
                     </div>
-                    <p class="item-price"><span >{{(p.price*1.05).toFixed(2)}}</span>&nbsp; <b>{{p.price.toFixed(2)}} NIS</b></p>
+                    <p class="item-price"><span >{{(p.price*1.05).toFixed(2)}}</span>&nbsp; <b>{{p.price | number:'1.2-2'}} NIS</b></p>
                     <a  *ngIf="isAdmin" class="btn btn-primary" (click)="selectProduct(p)">Edit</a>
                     <a  *ngIf="!isAdmin" class="btn btn-primary" (click)="selectProduct(p)">Add to Cart</a>
                   </div>

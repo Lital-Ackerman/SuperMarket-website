@@ -22,9 +22,9 @@
         <tbody>
           <tr *ngFor="let i of myCartContent">
             <td [innerHTML]="checkOut? (i.productName| highLighter:searchProductName:'partial'): i.productName"></td>
-            <td>{{i.price.toFixed(2)}}</td>
+            <td>{{i.price | number: '1.2-2'}}</td>
             <td>{{i.quantity}}</td>
-            <td>{{i.totalPerProduct.toFixed(2)}}</td>
+            <td>{{i.totalPerProduct | number: '1.2-2'}}</td>
             <td><button *ngIf="!checkOut" title="Delete Item" type="button" (click)="DeleteItems(i.itemId)" class="bi bi-x-circle"></button></td>
           </tr>
         </tbody>
@@ -32,7 +32,7 @@
   </div>
 
     <div class="cartFooter">
-      <h4>Total: {{total.toFixed(2)}} NIS</h4>
+      <h4>Total: {{total | number: '1.2-2'}} NIS</h4>
       <button class="deleteAllBtn" mat-stroked-button	color="warn" *ngIf="!checkOut" type="button" (click)="DeleteItems('all')" [disabled]="myCartContent.length==0">Delete All <i class="bi bi-trash3"></i></button>
       <button class="checkOutBtn" mat-stroked-button color="primary"  *ngIf="!checkOut" type="button" (click)="onCheckOut()" [disabled]="myCartContent.length==0">CheckOut <i class="bi bi-cart3"></i></button>
     </div>

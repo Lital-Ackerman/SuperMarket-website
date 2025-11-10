@@ -30,6 +30,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   cartStatus:string;
   emailRegEx= environment.patterns.email;
   passwordRegEx= environment.patterns.password;
+  showPassword = false;
 
 
   constructor(
@@ -187,6 +188,10 @@ export class LoginComponent implements OnInit, AfterViewInit {
             this.shopBtn._elementRef.nativeElement.disabled= true;
             this.globalService.openSnackBar("Oops something went wrong!");
           }
+        }
+
+         togglePassword() {
+          this.showPassword = !this.showPassword;
         }
       }
 
