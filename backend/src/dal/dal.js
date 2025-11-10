@@ -1,4 +1,6 @@
-const db = require("mysql");
+
+const db = require("mysql2");
+const fs = require('fs');
 
 
 // const pool = db.createPool({
@@ -12,7 +14,11 @@ const pool = db.createPool({
     host: "mysql-supermario-supermario.i.aivencloud.com",
     user: "avnadmin",
     port: 24875,
-    database: "supermarketdb"
+    database: "supermarketdb",
+    password: "AVNS_6h9uBXjjSyg8EVTkvzF",
+    ssl: {
+    ca: fs.readFileSync('../backend/src/certs/ca.pem') 
+  }
 });
 
 /**

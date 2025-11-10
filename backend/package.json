@@ -33,6 +33,7 @@
         "mandatoryenv": "^1.1.1",
         "module-alias": "^2.2.2",
         "morgan": "^1.9.1",
+        "mysql2": "^3.15.3",
         "mysqlm": "^2.0.3",
         "rotating-file-stream": "^1.4.6",
         "ts-node-dev": "^1.0.0-pre.43",
