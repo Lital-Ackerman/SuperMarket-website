@@ -11,11 +11,11 @@ const fs = require('fs');
 // });
 
 const pool = db.createPool({
-    host: "mysql-supermario-supermario.i.aivencloud.com",
+    host: "mysql-249b2981-supermario.a.aivencloud.com",
     user: "avnadmin",
     port: 24875,
     database: "supermarketdb",
-    password: "AVNS_6h9uBXjjSyg8EVTkvzF",
+    password: "AVNS_ym9528SemVOj_jshvyv",
     ssl: {
     ca: fs.readFileSync('../backend/src/certs/ca.pem') 
   }
